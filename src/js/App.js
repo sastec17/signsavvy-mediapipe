@@ -14,7 +14,7 @@
 
 // Code reformatted by EECS 495 SignSavvy team. Based on Mediapipe's code
 
-import './App.css';
+import '../App.css';
 import React, {useRef} from 'react';
 import {
   GestureRecognizer,
