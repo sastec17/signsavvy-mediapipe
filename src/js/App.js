@@ -163,21 +163,22 @@ function App() {
 
   return (
     <div className="App">
+      <h1>SignSavvy</h1>
+      <p>Real-Time Translation</p>
+      <p>Enable WebCam and begin signing!</p>
       <header className="App-header">
-        <h1>SignSavvy</h1>
-        <button id='myButton' onClick={handleClick}
-        > Click to change colors!!! </button>
         <section id="demos" className="invisible">
           <div id="liveView" className="videoView">
             <button id="webcamButton" className="mdc-button mdc-button-raised"
             onClick={enableCam}>
-              <span className="mdc-button-label">Enable Webcam!</span>
+              <span className="mdc-button-label">Click to Enable Webcam</span>
             </button>
           </div>
     
           <div style={{position: 'relative'}}> 
             <video ref={videoRef} id="webcam" autoPlay playsInline></video>
-            <canvas className='output_canvas' id='output_canvas' ref={canvasRef} style={{width: '1280'}}></canvas>
+            <canvas className='output_canvas' id='output_canvas' ref={canvasRef} 
+                    style={{width: '1280', height: '720', position: 'absolute', left: '0px', top: '0px'}}></canvas>
             <p id='gesture_output' className="output"></p>
           </div>
         </section>
