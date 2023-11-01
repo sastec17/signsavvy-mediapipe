@@ -1,38 +1,45 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import reportWebVitals from './reportWebVitals';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import './index.css';
-import App from './js/App';
-import ErrorPage from './js/error';
-import Login from './js/login';
-import Settings from './js/settings';
-import SignOfTheDay from './js/signOfTheDay';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import reportWebVitals from "./reportWebVitals";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./index.css";
+import App from "./js/App";
+import ErrorPage from "./js/error";
+import Login from "./js/login";
+import Settings from "./js/settings";
+import SignOfTheDay from "./js/signOfTheDay";
+import Home from "./js/home";
+import Create from "./js/createaccount";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App></App>,
-    errorElement: <ErrorPage></ErrorPage>
+    errorElement: <ErrorPage></ErrorPage>,
   },
   {
     path: "/login",
-    element: <Login></Login>
+    element: <Login></Login>,
   },
   {
-    path: '/settings',
-    element: <Settings></Settings>
+    path: "/settings",
+    element: <Settings></Settings>,
   },
   {
-    path: '/sign_of_the_day',
-    element: <SignOfTheDay></SignOfTheDay>
-  }
+    path: "/sign_of_the_day",
+    element: <SignOfTheDay></SignOfTheDay>,
+  },
+  {
+    path: "/home",
+    element: <Home></Home>,
+  },
+  {
+    path: "/create",
+    element: <Create></Create>,
+  },
 ]);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <RouterProvider router={router}></RouterProvider>

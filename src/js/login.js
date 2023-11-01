@@ -11,9 +11,11 @@ const Login = (props) => {
   const navigate = useNavigate();
 
   const onButtonClick = () => {
-    // You'll update this function later...
+    navigate("/home");
   };
-
+  const onButtonCreate = () => {
+    navigate("/create");
+  };
   return (
     <div className={"mainContainer"}>
       <div className={"titleContainer"}>
@@ -46,6 +48,15 @@ const Login = (props) => {
           type="button"
           onClick={onButtonClick}
           value={"Log in"}
+        />
+      </div>
+      <br />
+      <div className={"inputContainer"}>
+        <input
+          className={"inputButton"}
+          type="button"
+          onClick={onButtonCreate}
+          value={"Create new account"}
         />
       </div>
     </div>

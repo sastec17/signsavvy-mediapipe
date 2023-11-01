@@ -1,7 +1,73 @@
 // Create Account
-import React, { useRef } from "react";
+// Welcome / Login screen
+import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Create() {
-  return <>Create New User Account</>;
-}
+const Create = (props) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [FirstName, setFirstName] = useState("");
+  const [LastName, setLastName] = useState("");
+
+  const navigate = useNavigate();
+
+  const onButtonClick = () => {
+    navigate("/home");
+    // You'll update this function later...
+  };
+
+  return (
+    <div className={"mainContainer"}>
+      <div className={"titleContainer"}>
+        <div>Create Account</div>
+      </div>
+      <br />
+      <div className={"inputContainer"}>
+        <input
+          value={FirstName}
+          placeholder="Enter your first name here"
+          onChange={(ev) => setFirstName(ev.target.value)}
+          className={"inputBox"}
+        />
+      </div>
+      <br />
+      <div className={"inputContainer"}>
+        <input
+          value={LastName}
+          placeholder="Enter your last name here"
+          onChange={(ev) => setLastName(ev.target.value)}
+          className={"inputBox"}
+        />
+      </div>
+      <br />
+      <div className={"inputContainer"}>
+        <input
+          value={username}
+          placeholder="Enter username here"
+          onChange={(ev) => setUsername(ev.target.value)}
+          className={"inputBox"}
+        />
+      </div>
+      <br />
+      <div className={"inputContainer"}>
+        <input
+          value={password}
+          placeholder="Enter password here"
+          onChange={(ev) => setPassword(ev.target.value)}
+          className={"inputBox"}
+        />
+      </div>
+      <br />
+      <div className={"inputContainer"}>
+        <input
+          className={"inputButton"}
+          type="button"
+          onClick={onButtonClick}
+          value={"Create Account"}
+        />
+      </div>
+    </div>
+  );
+};
+
 export default Create;
