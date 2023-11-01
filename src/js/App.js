@@ -163,9 +163,10 @@ function App() {
 
   return (
     <div className="App">
+      <p> TODO - Insert Navigation bar here! </p>
       <h1>SignSavvy</h1>
       <p>Real-Time Translation</p>
-      <p>Enable WebCam and begin signing!</p>
+      <p>Enable WebCam and begin signing</p>
       <header className="App-header">
         <section id="demos" className="invisible">
           <div id="liveView" className="videoView">
