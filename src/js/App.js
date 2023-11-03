@@ -15,6 +15,7 @@
 // Code reformatted by EECS 495 SignSavvy team. Based on Mediapipe's code
 
 import '../App.css';
+import AppRouter from './AppRouter';
 import React, {useRef} from 'react';
 import {
   GestureRecognizer,
@@ -163,7 +164,7 @@ function App() {
 
   return (
     <div className="App">
-      <p> TODO - Insert Navigation bar here! </p>
+      <p> <AppRouter /> </p>
       <h1>SignSavvy</h1>
       <p>Real-Time Translation</p>
       <p>Enable WebCam and begin signing</p>
