@@ -4,12 +4,12 @@ import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import App from "./js/App";
-import ErrorPage from "./js/Error";
-import Login from "./js/Login";
-import Settings from "./js/Settings";
-import SignOfTheDay from "./js/SignOfTheDay";
-import Home from "./js/Home";
-import Create from "./js/CreateAccount";
+import ErrorPage from "./js/error";
+import Login from "./js/login";
+import Settings from "./js/settings";
+import SignOfTheDay from "./js/signOfTheDay";
+import Home from "./js/home";
+import Create from "./js/createaccount";
 import AppRouter from "./js/AppRouter";
 
 

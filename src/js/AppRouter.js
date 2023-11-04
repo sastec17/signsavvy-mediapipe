@@ -2,12 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import '../styles.css';
 
-import Home from './Home';
-import Settings from './Settings';
-import Login from './Login';
-import CreateAccount from './CreateAccount';
-import SignOfTheDay from './SignOfTheDay';
-import Error from './Error';
+import Home from './home';
+import Settings from './settings';
+import Login from './login';
+import CreateAccount from './createaccount';
+import SignOfTheDay from './signOfTheDay';
+import Error from './error';
 import App from './App';
 
 
