@@ -15,12 +15,15 @@
 // Code reformatted by EECS 495 SignSavvy team. Based on Mediapipe's code
 
 import '../App.css';
+import './AppRouter';
 import React, {useRef} from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import {
   GestureRecognizer,
   FilesetResolver,
   DrawingUtils
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
+import AppRouter from './AppRouter';
 let gestureRecognizer = GestureRecognizer;
 let webcamRunning = false;
 let runningMode = "IMAGE";
@@ -163,7 +166,6 @@ function App() {
 
   return (
     <div className="App">
-      <p> TODO - Insert Navigation bar here! </p>
       <h1>SignSavvy</h1>
       <p>Real-Time Translation</p>
       <p>Enable WebCam and begin signing</p>

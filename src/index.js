@@ -1,16 +1,20 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import App from "./js/App";
-import ErrorPage from "./js/error";
-import Login from "./js/login";
-import Settings from "./js/settings";
-import SignOfTheDay from "./js/signOfTheDay";
-import Home from "./js/home";
-import Create from "./js/createaccount";
+import ErrorPage from "./js/Error";
+import Login from "./js/Login";
+import Settings from "./js/Settings";
+import SignOfTheDay from "./js/SignOfTheDay";
+import Home from "./js/Home";
+import Create from "./js/CreateAccount";
+import AppRouter from "./js/AppRouter";
 
+
+
+/*
 const router = createBrowserRouter([
   {
     path: "/",
@@ -39,11 +43,20 @@ const router = createBrowserRouter([
   },
 ]);
 
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <RouterProvider router={router}></RouterProvider>
   </React.StrictMode>
+);
+*/
+
+ReactDOM.render(
+  <React.StrictMode>
+    <AppRouter />
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

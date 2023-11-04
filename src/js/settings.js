@@ -1,8 +1,8 @@
 // Settings Screen
 import React, { useState, useEffect } from 'react';
-import './styles.css';
-//import YourAccount from './yourAccount'; // Import the YourAccount component
-//import SubtitleStyles from './subtitleStyles'; // Import the SubtitleStyles component
+import { useNavigate } from "react-router-dom";
+import '../styles.css';
+
 
 function Settings() {
   const [newPassword, setNewPassword] = useState("");
@@ -12,6 +12,8 @@ function Settings() {
   const [fontSize, setFontSize] = useState("16px"); // Default font size
   const [fontColor, setFontColor] = useState("#000000"); // Default font color
   const [fontBackgroundColor, setFontBackgroundColor] = useState("#FFFFFF"); // Default font background color
+
+  let navigate = useNavigate();
 
   useEffect(() => {
     retrieveData();
@@ -40,9 +42,7 @@ function Settings() {
 
   const logout = async () => {
     try {
-      //TODO:
-      // Add logout logic
-      // Navigate back to login page -> navigation.navigate("Log in");
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }
