@@ -1,10 +1,7 @@
-// Settings Screen
 import React, { useState, useEffect } from 'react';
 import './styles.css';
-//import YourAccount from './yourAccount'; // Import the YourAccount component
-//import SubtitleStyles from './subtitleStyles'; // Import the SubtitleStyles component
 
-function Settings() {
+const Settings = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
@@ -19,7 +16,7 @@ function Settings() {
 
   const retrieveData = async () => {
     try {
-      const value = "signsavvyuser@gmail.com"; //TODO: Replace this with database retrieval logic
+      const value = "signsavvyuser@gmail.com"; // TODO: Replace this with database retrieval logic
       setName(value);
     } catch (error) {
       console.log(error);
@@ -40,9 +37,9 @@ function Settings() {
 
   const logout = async () => {
     try {
-      //TODO:
+      // TODO:
       // Add logout logic
-      // Navigate back to login page -> navigation.navigate("Log in");
+      // Navigate back to the login page -> navigation.navigate("Log in");
     } catch (error) {
       console.log(error);
     }
@@ -109,28 +106,34 @@ function Settings() {
               Font Size
               <img src="public/question_mark_tooltip.png" className="info-icon" />
               <span className="tooltip-text">Enter a font size within 14px to 24px</span>
-            </label>            
-            <input
+            </label>
+            <select
               className="input"
-              type="text"
               value={fontSize}
               onChange={(e) => setFontSize(e.target.value)}
-            />
+            >
+              <option value="14px">14px</option>
+              <option value="16px">16px</option>
+              <option value="18px">18px</option>
+              <option value="20px">20px</option>
+              <option value="22px">22px</option>
+              <option value="24px">24px</option>
+            </select>
             <label>Translation Font Color</label>
             <input
               className="input"
-              type="text"
+              type="color" // Use type="color" for color picker
               value={fontColor}
               onChange={(e) => setFontColor(e.target.value)}
             />
             <label>Translation Font Background Color</label>
             <input
               className="input"
-              type="text"
+              type="color" // Use type="color" for color picker
               value={fontBackgroundColor}
               onChange={(e) => setFontBackgroundColor(e.target.value)}
             />
-          <button onClick={onPressSave} className="saveButton">
+            <button onClick={onPressSave} className="saveButton">
               SAVE CHANGES
             </button>
             <button onClick={logout} className="logoutButton">
