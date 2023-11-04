@@ -16,7 +16,7 @@
 
 import '../App.css';
 import './AppRouter';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import {
@@ -24,7 +24,6 @@ import {
   FilesetResolver,
   DrawingUtils
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
-import ReactSwitch from 'react-switch'
 import RecordScreen from '../components/ScreenRecord';
 import ToggleSwitch from '../components/ToggleSwitch';
 
