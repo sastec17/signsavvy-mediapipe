@@ -25,16 +25,18 @@ import {
   DrawingUtils
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
 import AppRouter from './AppRouter';
+import ToggleSwitch from '../components/ToggleSwitch.js';
+import ReactSwitch from 'react-switch'
 
 let gestureRecognizer = GestureRecognizer;
 let webcamRunning = false;
 let runningMode = "IMAGE";
 let usedBefore=false;
-let setSpeech = false;
 const demosSection = document.getElementById("demos");
 const videoHeight = "360px";
 const videoWidth = "480px";
 var val = '';
+let speech_bool = false;
 
 // TODO - Replace modelAssetPath with local path to pre-trained set - Do we need to include additional data to this?
 const createGestureRecognizer = async () => {
@@ -60,7 +62,8 @@ createGestureRecognizer();
 function App() {
   // vars that rely on application to render first
   const videoRef=useRef(null);
-  const canvasRef=useRef(null);  
+  const canvasRef=useRef(null); 
+  const [speech, setSpeech] = useState(false) 
 
   // text to speech variables
   const [value, setValue] = useState('');
@@ -76,22 +79,12 @@ function App() {
     enableTextToSpeech();
     return () => {
       console.log('here')
-      webcamRunning = false;
-      usedBefore=true;
+      if (webcamRunning == true) {
+        webcamRunning = false;
+        usedBefore=true;
+      }
     }
   }, [])
-
-  const handleClick = () => {
-    const element = document.getElementById('myButton');
-    if (element) {
-      element.style.backgroundColor = 'green';
-      element.style.color = 'white'; 
-      element.style.border = 'none'; 
-      element.style.padding = '10px 20px'; 
-      element.style.borderRadius = '10px'; 
-      element.style.cursor = 'pointer';
-    }
-  }
   // Check if webcam access is supported.
   function hasGetUserMedia() {
     return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
@@ -183,8 +176,9 @@ function App() {
     } else {
       gestureOutput.style.display = "none";
     }
-    if (val !== categoryName && setSpeech == true) {
-      console.log(setSpeech)
+    console.log("speech", speech_bool)
+    if (val !== categoryName && speech_bool == true) {
+      console.log(speech_bool)
       speak({text: categoryName})
       val = categoryName
     }
@@ -193,17 +187,19 @@ function App() {
       window.requestAnimationFrame(predictWebcam);
     }
   }
+  const handleChange = val => { 
+    setSpeech(val)
+    speech_bool = val;
+    console.log(speech_bool) }
 
   return (
     <div className="App">
       <h1>SignSavvy</h1>
       <p>Real-Time Translation</p>
       <p>Enable WebCam and begin signing</p>
-      <div>
-      <textarea
-        value={val}
-        onChange={(event) => setValue(event.target.val)}
-      />
+      <div style={{display: 'inline-block'}}>
+      <p>Text to Speech</p>
+          <ReactSwitch checked={speech_bool} onChange={handleChange}></ReactSwitch>
     </div>
       <header className="App-header">
         <section id="demos" className="invisible">
@@ -212,15 +208,7 @@ function App() {
             onClick={enableCam}>
               <span className="mdc-button-label">Click to Enable Webcam</span>
             </button>
-            <button onClick={() => 
-            {
-              console.log('before', setSpeech)
-              setSpeech = !setSpeech
-              console.log('after', setSpeech)}}>
-            <span className="mdc-button-label">Click to Text to Speech</span>
-            </button>
           </div>
-    
           <div style={{position: 'relative'}}> 
             <video ref={videoRef} id="webcam" autoPlay playsInline></video>
             <canvas className='output_canvas' id='output_canvas' ref={canvasRef} 
