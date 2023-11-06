@@ -104,8 +104,11 @@ const Settings = () => {
             <h2>User Preferences</h2>
             <label className="tooltip">
               Font Size
-              <img src="public/question_mark_tooltip.png" className="info-icon" />
-              <span className="tooltip-text">Enter a font size within 14px to 24px</span>
+              <img 
+                src="question_mark_tooltip.png" 
+                className="info-icon tooltip-icon"
+                />
+              <span className="tooltip-text">This will adjust the translation text font size on the Translation Page.</span>
             </label>
             <select
               className="input"
@@ -119,14 +122,28 @@ const Settings = () => {
               <option value="22px">22px</option>
               <option value="24px">24px</option>
             </select>
-            <label>Translation Font Color</label>
+            <label className="tooltip">
+              Translation Font Color
+              <img 
+                src="question_mark_tooltip.png" 
+                className="info-icon tooltip-icon"
+                />
+              <span className="tooltip-text">This will adjust the translation text color on the Translation Page.</span>
+            </label>
             <input
               className="input"
               type="color" // Use type="color" for color picker
               value={fontColor}
               onChange={(e) => setFontColor(e.target.value)}
             />
-            <label>Translation Font Background Color</label>
+            <label className="tooltip">
+              Translation Font Background Color
+              <img 
+                src="question_mark_tooltip.png" 
+                className="info-icon tooltip-icon"
+                />
+              <span className="tooltip-text">This will adjust the translation text background color on the Translation Page.</span>
+            </label>
             <input
               className="input"
               type="color" // Use type="color" for color picker
