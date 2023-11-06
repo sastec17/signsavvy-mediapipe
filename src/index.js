@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
@@ -11,8 +12,6 @@ import SignOfTheDay from "./js/signOfTheDay";
 import Home from "./js/home";
 import Create from "./js/createaccount";
 import AppRouter from "./js/AppRouter";
-
-
 
 /*
 const router = createBrowserRouter([

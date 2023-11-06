@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import './styles.css';
 
 const Settings = () => {
@@ -9,6 +10,7 @@ const Settings = () => {
   const [fontSize, setFontSize] = useState("16px"); // Default font size
   const [fontColor, setFontColor] = useState("#000000"); // Default font color
   const [fontBackgroundColor, setFontBackgroundColor] = useState("#FFFFFF"); // Default font background color
+  let navigate = useNavigate();
 
   let navigate = useNavigate();
 
@@ -39,9 +41,7 @@ const Settings = () => {
 
   const logout = async () => {
     try {
-      // TODO:
-      // Add logout logic
-      // Navigate back to the login page -> navigation.navigate("Log in");
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }
