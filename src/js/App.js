@@ -30,10 +30,11 @@ let gestureRecognizer = GestureRecognizer;
 let webcamRunning = false;
 let runningMode = "IMAGE";
 let usedBefore=false;
-
+let setSpeech = false;
 const demosSection = document.getElementById("demos");
 const videoHeight = "360px";
 const videoWidth = "480px";
+var val = '';
 
 // TODO - Replace modelAssetPath with local path to pre-trained set - Do we need to include additional data to this?
 const createGestureRecognizer = async () => {
@@ -65,10 +66,14 @@ function App() {
   const [value, setValue] = useState('');
   const { speak } = useSpeechSynthesis();
   // TODO: Make this functional with useState() - lagged for some
-  var val = '';
-
   useEffect(() => {
     if (usedBefore) { enableCam() }
+    const enableTextToSpeech = () => {
+      console.log('enabling')
+      setValue('');
+      speak({text: 'my speech here!'})
+    }
+    enableTextToSpeech();
     return () => {
       console.log('here')
       webcamRunning = false;
@@ -91,8 +96,6 @@ function App() {
   function hasGetUserMedia() {
     return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
   }
-
- 
   // openWebCam
   function enableCam(event) {
     if (hasGetUserMedia()) {
@@ -180,7 +183,8 @@ function App() {
     } else {
       gestureOutput.style.display = "none";
     }
-    if (val !== categoryName) {
+    if (val !== categoryName && setSpeech == true) {
+      console.log(setSpeech)
       speak({text: categoryName})
       val = categoryName
     }
@@ -197,8 +201,8 @@ function App() {
       <p>Enable WebCam and begin signing</p>
       <div>
       <textarea
-        value={value}
-        onChange={(event) => setValue(event.target.value)}
+        value={val}
+        onChange={(event) => setValue(event.target.val)}
       />
     </div>
       <header className="App-header">
@@ -207,6 +211,13 @@ function App() {
             <button id="webcamButton" className="mdc-button mdc-button-raised"
             onClick={enableCam}>
               <span className="mdc-button-label">Click to Enable Webcam</span>
+            </button>
+            <button onClick={() => 
+            {
+              console.log('before', setSpeech)
+              setSpeech = !setSpeech
+              console.log('after', setSpeech)}}>
+            <span className="mdc-button-label">Click to Text to Speech</span>
             </button>
           </div>
     
