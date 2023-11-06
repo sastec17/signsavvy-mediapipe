@@ -15,18 +15,25 @@
 // Code reformatted by EECS 495 SignSavvy team. Based on Mediapipe's code
 
 import '../App.css';
-import React, {useRef} from 'react';
+import './AppRouter';
+import React, {useEffect, useRef} from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import {
   GestureRecognizer,
   FilesetResolver,
   DrawingUtils
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
+import AppRouter from './AppRouter';
+
 let gestureRecognizer = GestureRecognizer;
 let webcamRunning = false;
 let runningMode = "IMAGE";
+let usedBefore=false;
+
 const demosSection = document.getElementById("demos");
 const videoHeight = "360px";
 const videoWidth = "480px";
+
 // TODO - Replace modelAssetPath with local path to pre-trained set - Do we need to include additional data to this?
 const createGestureRecognizer = async () => {
   const vision = await FilesetResolver.forVisionTasks(
@@ -67,6 +74,10 @@ function App() {
   // Check if webcam access is supported.
   function hasGetUserMedia() {
     return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+  }
+
+  if (videoRef.current !== null) {
+    console.log('now')
   }
  
   // openWebCam
@@ -109,7 +120,8 @@ function App() {
       await gestureRecognizer.setOptions({ runningMode: "VIDEO"});
     }
     let nowInMs = Date.now();
-    if (videoRef.current.currentTime !== lastVideoTime) {
+    if (videoRef.current === null) {return;}
+    if (videoRef.current && videoRef.current.currentTime !== lastVideoTime) {
       lastVideoTime = videoRef.current.currentTime;
       results = gestureRecognizer.recognizeForVideo(videoRef.current, nowInMs);
     }
@@ -156,14 +168,23 @@ function App() {
     } else {
       gestureOutput.style.display = "none";
     }
+    console.log(webcamRunning)
     if (webcamRunning === true) {
       window.requestAnimationFrame(predictWebcam);
     }
   }
 
+  useEffect(() => {
+    if (usedBefore) { enableCam() }
+    return () => {
+      console.log('here')
+      webcamRunning = false;
+      usedBefore=true;
+    }
+  }, [])
+
   return (
     <div className="App">
-      <p> TODO - Insert Navigation bar here! </p>
       <h1>SignSavvy</h1>
       <p>Real-Time Translation</p>
       <p>Enable WebCam and begin signing</p>

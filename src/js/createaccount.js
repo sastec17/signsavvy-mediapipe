@@ -12,7 +12,7 @@ const Create = (props) => {
   const navigate = useNavigate();
 
   const onButtonClick = () => {
-    navigate("/home");
+    navigate("/");
     // You'll update this function later...
   };
 

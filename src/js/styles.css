@@ -117,14 +117,33 @@
     opacity: 1;
   }
   
-  /* Tooltip Icon Style */
+  /* Tooltip Icon Styling */
   .tooltip-icon {
     width: 40px;
     height: 40px;
     margin-top: -5px;
   }
   
+  /* Navigation Bar Styling */
+  nav {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+    background-color: #0056b3; /* Match your desired blue color */
+    height: 80px; /* Adjust the height as needed */
+    margin-bottom: 20px;
+  }
   
+  nav a {
+    text-decoration: none;
+    color: white;
+    margin: 0 20px; /* Add spacing between links */
+    font-weight: bold;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
   
   
   
