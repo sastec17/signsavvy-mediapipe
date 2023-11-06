@@ -11,10 +11,10 @@ const Login = (props) => {
   const navigate = useNavigate();
 
   const onButtonClick = () => {
-    navigate("/home");
+    navigate("/");
   };
   const onButtonCreate = () => {
-    navigate("/create");
+    navigate("/create-account");
   };
   return (
     <div className={"mainContainer"}>
