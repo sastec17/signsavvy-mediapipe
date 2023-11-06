@@ -65,7 +65,7 @@ function App() {
   const [value, setValue] = useState('');
   const { speak } = useSpeechSynthesis();
   // TODO: Make this functional with useState() - lagged for some
-  let val = '';
+  var val = '';
 
   useEffect(() => {
     if (usedBefore) { enableCam() }
@@ -92,9 +92,6 @@ function App() {
     return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
   }
 
-  if (videoRef.current !== null) {
-    console.log('now')
-  }
  
   // openWebCam
   function enableCam(event) {
@@ -184,8 +181,8 @@ function App() {
       gestureOutput.style.display = "none";
     }
     if (val !== categoryName) {
-      console.log(val);
-      speak({text: val})
+      speak({text: categoryName})
+      val = categoryName
     }
 
     if (webcamRunning === true) {
