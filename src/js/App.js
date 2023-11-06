@@ -183,10 +183,7 @@ function App() {
   }
   const handleChange = val => { 
     console.log('made it')
-    setSpeech(val)
-    console.log(val)
     speech_bool = val;}
-
   return (
     <div className="App">
       <h1>Translation Page</h1>
