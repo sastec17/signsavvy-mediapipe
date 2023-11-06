@@ -25,8 +25,8 @@ import {
   DrawingUtils
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
 import AppRouter from './AppRouter';
-import ToggleSwitch from '../components/ToggleSwitch.js';
 import ReactSwitch from 'react-switch'
+import ScreenRecorder from '../components/ScreenRecorder'
 
 let gestureRecognizer = GestureRecognizer;
 let webcamRunning = false;
@@ -192,15 +192,60 @@ function App() {
     speech_bool = val;
     console.log(speech_bool) }
 
+    function startRecording() {
+      if (!videoRef.current || !canvasRef.current) {
+        console.error('Video or Canvas Ref is not available');
+        return;
+      }
+      const videoStream = videoRef.current.captureStream();
+      const canvasStream = canvasRef.current.captureStream();
+
+      if (!videoStream || !canvasStream) {
+        console.error('Video or Canvas Stream is not available');
+        return;
+      }
+
+      let combinedStream = new MediaStream([...videoStream.getTracks(), ...canvasStream.getTracks()]);
+
+      let mediaRecorder = new MediaRecorder(combinedStream);
+
+      let recordedChunks = [];
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) {
+          recordedChunks.push(e.data);
+        }
+      };
+
+      // startrecording: 
+      mediaRecorder.start();
+
+      let stopButton = document.querySelector("#stop-button");
+      stopButton.addEventListener('click', function() {
+        mediaRecorder.stop();
+      })
+
+      mediaRecorder.onstop = () => {
+        let blob = new Blob(recordedChunks, {type: "video/webm"});
+        let url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'recorded_video.webm';
+        link.click();
+      }
+
+    }
   return (
     <div className="App">
       <h1>SignSavvy</h1>
       <p>Real-Time Translation</p>
       <p>Enable WebCam and begin signing</p>
+      <button label="start" onClick={startRecording}><span>Start</span></button>
+      <button id="stop-button" label="stop"><span>Stop</span></button>
       <div style={{display: 'inline-block'}}>
-      <p>Text to Speech</p>
+        <p>Text to Speech</p>
           <ReactSwitch checked={speech_bool} onChange={handleChange}></ReactSwitch>
-    </div>
+      </div>
+      <ScreenRecorder></ScreenRecorder>
       <header className="App-header">
         <section id="demos" className="invisible">
           <div id="liveView" className="videoView">
