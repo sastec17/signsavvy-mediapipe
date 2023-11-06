@@ -12,7 +12,6 @@ const Settings = () => {
   const [fontBackgroundColor, setFontBackgroundColor] = useState("#FFFFFF"); // Default font background color
   let navigate = useNavigate();
 
-  let navigate = useNavigate();
 
   useEffect(() => {
     retrieveData();
