@@ -190,7 +190,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>SignSavvy</h1>
+      <h1>Translation Page</h1>
       <p>Real-Time Translation</p>
       <p>Enable WebCam and begin signing</p>
       <ToggleSwitch label={'Text to Speech'} checked={speech_bool} setChecked={handleChange}></ToggleSwitch>
