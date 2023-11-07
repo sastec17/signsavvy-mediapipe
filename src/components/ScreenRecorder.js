@@ -5,7 +5,6 @@ const ScreenRecorder = () => {
   const [recording, setRecording] = useState(false);
   const [recordedVideoURL, setRecordedVideoURL] = useState('');
   const recorderRef = useRef(null);
-  const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
   const recordScreen = async () => {
@@ -29,17 +28,16 @@ const ScreenRecorder = () => {
         recorder.stopRecording(() => {
           setRecording(false);
           const combinedStream = mergeStreams(videoElement, canvasElement);
-          const mergedRecorder = RecordRTC(combinedStream, { type: 'video' });
-          mergedRecorder.stopRecording(() => {
+          const mergedRecorder = RecordRTC(combinedStream, {type: 'video'});
+          mergedRecorder.stopRecording(()=>{
             const blob = mergedRecorder.getBlob();
             const url = URL.createObjectURL(blob);
             setRecordedVideoURL(url);
-          });
+          })
         });
-      }, 10000); // 10 seconds
+      }, 3000); // 3 seconds
     }
   };
-
   const mergeStreams = (video, canvas) => {
     const canvasStream = canvas.captureStream(25); // FPS set to 25
     const videoStream = video.captureStream();
@@ -71,7 +69,6 @@ const ScreenRecorder = () => {
       {recordedVideoURL && (
         <button onClick={downloadVideo}>Download Recorded Video</button>
       )}
-
     </div>
   );
 };
