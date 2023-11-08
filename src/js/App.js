@@ -241,13 +241,13 @@ function App() {
       <h1>SignSavvy</h1>
       <p>Real-Time Translation</p>
       <p>Enable WebCam and begin signing</p>
-      <button label="start" onClick={startRecording}><span>Start</span></button>
-      <button id="stop-button" label="stop"><span>Stop</span></button>
-      <div style={{display: 'inline-block'}}>
-        <p>Text to Speech</p>
+      <div style={{display: 'flex', alignItems:'center'}}>
+        <p>Text to Speech </p>
           <ReactSwitch checked={speech_bool} onChange={handleChange}></ReactSwitch>
       </div>
-      <RecordScreen></RecordScreen>
+
+     {webcamRunning ? <RecordScreen></RecordScreen> : <></>}
+
       <header className="App-header">
         <section id="demos" className="invisible">
           <div id="liveView" className="videoView">
