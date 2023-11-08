@@ -9,6 +9,9 @@ import CreateAccount from './createaccount';
 import SignOfTheDay from './signOfTheDay';
 import Error from './error';
 import App from './App';
+import { FaceStylizer } from '@mediapipe/tasks-vision';
+
+const isLoggedIn = true; // Currently is always set to true, need to implement user authentification logic 
 
 const AppRouter = () => {
   return (
@@ -16,19 +19,18 @@ const AppRouter = () => {
       <nav>
         <div className="navbar">
           <h1 className="title">SignSavvy</h1>
-          <Link to="/">Sign Of The Day</Link>
-          <Link to="/translation-page">Translation Page</Link>
-          <Link to="/settings">Settings</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/create-account">Create Account</Link>
+          {isLoggedIn && <Link to="/">Sign Of The Day</Link>}
+          {isLoggedIn && <Link to="/translation-page">Translation Page</Link>}
+          {isLoggedIn && <Link to="/settings">Settings</Link>}
         </div>
       </nav>
       <Routes>
-        <Route path="/" element={<SignOfTheDay />} />
+        {isLoggedIn && <Route path="/" element={<SignOfTheDay />} />}
+        {!isLoggedIn && <Route path="/" element={<Login />} />}
         <Route path="/translation-page" element={<App />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/create-account" element={<CreateAccount />} />
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </Router>
