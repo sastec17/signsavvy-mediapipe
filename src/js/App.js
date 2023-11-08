@@ -27,6 +27,7 @@ import {
 import AppRouter from './AppRouter';
 import ReactSwitch from 'react-switch'
 import ScreenRecorder from '../components/ScreenRecorder'
+import RecordScreen from '../components/ScreenRecord2';
 
 let gestureRecognizer = GestureRecognizer;
 let webcamRunning = false;
@@ -162,12 +163,13 @@ function App() {
     }
     canvasCtx.restore();
     var categoryName = '';
+    var categoryScore = 0;
     const gestureOutput = document.getElementById("gesture_output");
     if (results.gestures.length > 0) {
       gestureOutput.style.display = "block";
       gestureOutput.style.width = videoWidth;
       categoryName = results.gestures[0][0].categoryName;
-      const categoryScore = parseFloat(
+      categoryScore = parseFloat(
         results.gestures[0][0].score * 100
       ).toFixed(2);
       const handedness = results.handednesses[0][0].displayName;
@@ -177,7 +179,7 @@ function App() {
       gestureOutput.style.display = "none";
     }
     console.log("speech", speech_bool)
-    if (val !== categoryName && speech_bool == true) {
+    if (val !== categoryName && speech_bool == true && categoryScore > 65) {
       console.log(speech_bool)
       speak({text: categoryName})
       val = categoryName
@@ -245,7 +247,7 @@ function App() {
         <p>Text to Speech</p>
           <ReactSwitch checked={speech_bool} onChange={handleChange}></ReactSwitch>
       </div>
-      <ScreenRecorder></ScreenRecorder>
+      <RecordScreen></RecordScreen>
       <header className="App-header">
         <section id="demos" className="invisible">
           <div id="liveView" className="videoView">
