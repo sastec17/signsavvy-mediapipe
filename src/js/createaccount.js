@@ -2,6 +2,7 @@
 // Welcome / Login screen
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Create = (props) => {
   const [username, setUsername] = useState("");
@@ -12,6 +13,19 @@ const Create = (props) => {
   const navigate = useNavigate();
 
   const onButtonClick = () => {
+    const data = JSON.stringify({
+      firstName: FirstName,
+      lastName: LastName,
+      username: username,
+      password: password,
+      fontsize: undefined,
+      fontcolor: undefined,
+      backgroundColor: undefined,
+    });
+    Cookies.set("login", username);
+    Cookies.set("name", FirstName);
+    Cookies.set(username, data);
+    //
     navigate("/");
     // You'll update this function later...
   };
