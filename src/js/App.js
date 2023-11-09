@@ -246,7 +246,7 @@ function App() {
           <ReactSwitch checked={speech_bool} onChange={handleChange}></ReactSwitch>
       </div>
 
-     {webcamRunning ? <RecordScreen></RecordScreen> : <></>}
+     <RecordScreen></RecordScreen>
 
       <header className="App-header">
         <section id="demos" className="invisible">
