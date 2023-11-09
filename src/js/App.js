@@ -18,24 +18,38 @@ import '../App.css';
 import './AppRouter';
 import React, {useEffect, useRef} from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+<<<<<<< HEAD
 import { useSpeechSynthesis } from 'react-speech-kit';
+=======
+>>>>>>> main
 import {
   GestureRecognizer,
   FilesetResolver,
   DrawingUtils
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
+<<<<<<< HEAD
 import RecordScreen from '../components/ScreenRecord';
 import ToggleSwitch from '../components/ToggleSwitch';
+=======
+import AppRouter from './AppRouter';
+>>>>>>> main
 
 let gestureRecognizer = GestureRecognizer;
 let webcamRunning = false;
 let runningMode = "IMAGE";
 let usedBefore=false;
+<<<<<<< HEAD
 const demosSection = document.getElementById("demos");
 const videoHeight = "360px";
 const videoWidth = "480px";
 var val = '';
 let speech_bool = false;
+=======
+
+const demosSection = document.getElementById("demos");
+const videoHeight = "360px";
+const videoWidth = "480px";
+>>>>>>> main
 
 // TODO - Replace modelAssetPath with local path to pre-trained set - Do we need to include additional data to this?
 const createGestureRecognizer = async () => {
@@ -84,6 +98,14 @@ function App() {
   function hasGetUserMedia() {
     return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
   }
+<<<<<<< HEAD
+=======
+
+  if (videoRef.current !== null) {
+    console.log('now')
+  }
+ 
+>>>>>>> main
   // openWebCam
   function enableCam(event) {
     if (hasGetUserMedia()) {
@@ -172,18 +194,35 @@ function App() {
     } else {
       gestureOutput.style.display = "none";
     }
+<<<<<<< HEAD
     if (val !== categoryName && speech_bool == true && categoryScore > 70) {
       speak({text: categoryName})
       val = categoryName
     }
 
+=======
+    console.log(webcamRunning)
+>>>>>>> main
     if (webcamRunning === true) {
       window.requestAnimationFrame(predictWebcam);
     }
   }
+<<<<<<< HEAD
   const handleChange = val => { 
     console.log('made it')
     speech_bool = val;}
+=======
+
+  useEffect(() => {
+    if (usedBefore) { enableCam() }
+    return () => {
+      console.log('here')
+      webcamRunning = false;
+      usedBefore=true;
+    }
+  }, [])
+
+>>>>>>> main
   return (
     <div className="App">
       <h1>Translation Page</h1>

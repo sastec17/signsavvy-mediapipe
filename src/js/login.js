@@ -12,6 +12,7 @@ const Login = (props) => {
   const navigate = useNavigate();
 
   const onButtonClick = () => {
+<<<<<<< HEAD
     if (username == "") {
       alert("Enter a username");
     } else if (password == "") {
@@ -50,6 +51,9 @@ const Login = (props) => {
     }
 
     */
+=======
+    navigate("/");
+>>>>>>> main
   };
   const onButtonCreate = () => {
     navigate("/create-account");
