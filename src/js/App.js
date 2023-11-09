@@ -24,10 +24,9 @@ import {
   FilesetResolver,
   DrawingUtils
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
-import AppRouter from './AppRouter';
 import ReactSwitch from 'react-switch'
-import ScreenRecorder from '../components/ScreenRecorder'
-import RecordScreen from '../components/ScreenRecord2';
+import RecordScreen from '../components/ScreenRecord';
+import ToggleSwitch from '../components/ToggleSwitch';
 
 let gestureRecognizer = GestureRecognizer;
 let webcamRunning = false;
@@ -65,6 +64,8 @@ function App() {
   const videoRef=useRef(null);
   const canvasRef=useRef(null); 
   const [speech, setSpeech] = useState(false) 
+  const speechRef=useRef(speech)
+  let mediaRecorder;
 
   // text to speech variables
   const [value, setValue] = useState('');
@@ -72,12 +73,6 @@ function App() {
   // TODO: Make this functional with useState() - lagged for some
   useEffect(() => {
     if (usedBefore) { enableCam() }
-    const enableTextToSpeech = () => {
-      console.log('enabling')
-      setValue('');
-      speak({text: 'my speech here!'})
-    }
-    enableTextToSpeech();
     return () => {
       console.log('here')
       if (webcamRunning == true) {
@@ -178,9 +173,7 @@ function App() {
     } else {
       gestureOutput.style.display = "none";
     }
-    console.log("speech", speech_bool)
-    if (val !== categoryName && speech_bool == true && categoryScore > 65) {
-      console.log(speech_bool)
+    if (val !== categoryName && speech_bool == true && categoryScore > 70) {
       speak({text: categoryName})
       val = categoryName
     }
@@ -190,64 +183,18 @@ function App() {
     }
   }
   const handleChange = val => { 
+    console.log('made it')
     setSpeech(val)
-    speech_bool = val;
-    console.log(speech_bool) }
+    console.log(val)
+    speech_bool = val;}
 
-    function startRecording() {
-      if (!videoRef.current || !canvasRef.current) {
-        console.error('Video or Canvas Ref is not available');
-        return;
-      }
-      const videoStream = videoRef.current.captureStream();
-      const canvasStream = canvasRef.current.captureStream();
-
-      if (!videoStream || !canvasStream) {
-        console.error('Video or Canvas Stream is not available');
-        return;
-      }
-
-      let combinedStream = new MediaStream([...videoStream.getTracks(), ...canvasStream.getTracks()]);
-
-      let mediaRecorder = new MediaRecorder(combinedStream);
-
-      let recordedChunks = [];
-      mediaRecorder.ondataavailable = (e) => {
-        if (e.data.size > 0) {
-          recordedChunks.push(e.data);
-        }
-      };
-
-      // startrecording: 
-      mediaRecorder.start();
-
-      let stopButton = document.querySelector("#stop-button");
-      stopButton.addEventListener('click', function() {
-        mediaRecorder.stop();
-      })
-
-      mediaRecorder.onstop = () => {
-        let blob = new Blob(recordedChunks, {type: "video/webm"});
-        let url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'recorded_video.webm';
-        link.click();
-      }
-
-    }
   return (
     <div className="App">
       <h1>SignSavvy</h1>
       <p>Real-Time Translation</p>
       <p>Enable WebCam and begin signing</p>
-      <div style={{display: 'flex', alignItems:'center'}}>
-        <p>Text to Speech </p>
-          <ReactSwitch checked={speech_bool} onChange={handleChange}></ReactSwitch>
-      </div>
-
+      <ToggleSwitch label={'Text to Speech'} checked={speech_bool} setChecked={handleChange}></ToggleSwitch>
      <RecordScreen></RecordScreen>
-
       <header className="App-header">
         <section id="demos" className="invisible">
           <div id="liveView" className="videoView">

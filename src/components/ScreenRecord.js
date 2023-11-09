@@ -1,35 +1,49 @@
+// Screen recorder component for real time translation
 import React, {useState} from 'react'
 
 const RecordScreen = () => {
-    let mediaRecorder;
+    const [recording, setRecording] = useState(false);
+    const [mediaRecorder, setMediaRecorder] = useState(null);
+    const [mediaStream, setMediaStream] = useState(null);
 
     const start_click = async() => {
-      console.log('made it to start click')
       let stream = await recordScreen();
-      let mimeType = 'video/webm';
-      mediaRecorder = createRecorder(stream, mimeType);
-      let node = document.createElement("p");
-      node.textContent = "started recording";
-      document.body.appendChild(node);
+      let mimeType = 'video/mp4';
+      const recorder = createRecorder(stream, mimeType);
+      setMediaRecorder(recorder);
+      setMediaStream(stream);
+      setRecording(true);
+      console.log(mediaRecorder)
     }
 
     const stop_click = async() => {
-      mediaRecorder.stop();
-      let node = document.createElement("p");
-      node.textContent = "Stopped recording";
-      document.body.appendChild(node);
+      // stop media recording
+      if (mediaRecorder) {
+        mediaRecorder.stop();
+      }
+      // stop the screen share
+      if (mediaStream) {
+        mediaStream.getTracks().forEach(track => track.stop());
+      }
+      // clean up variables for next recording
+      setRecording(false);
+      setMediaRecorder(null);
+      setMediaStream(null);
     }
-
 
     async function recordScreen() {
       // Specify the display media options
       const displayMediaOptions = {
         video: {
-          mediaSource: 'window', // Capture the window
-          cursor: 'always' // Show cursor in the captured window
+          mediaSource: 'screen', // Capture the window
+          cursor: 'always', // Show cursor in the captured window
           // You can add more options here as needed
         },
-        audio: true
+
+        preferCurrentTab: true,
+        audio: {
+          systemAudio: 'include'
+        }
       };
       return await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
     }
@@ -53,12 +67,12 @@ const RecordScreen = () => {
 
     function saveFile(recordedChunks) {
       const blob = new Blob(recordedChunks, {
-        type: 'video/webm'
+        type: 'video/mp4'
       });
       let filename = window.prompt('Enter file name'),
-          downloadLink = document.createElement('a');
+      downloadLink = document.createElement('a');
       downloadLink.href = URL.createObjectURL(blob);
-      downloadLink.download = `${filename}.webm`;
+      downloadLink.download = `${filename}.mp4`;
   
       document.body.appendChild(downloadLink);
       downloadLink.click();
@@ -66,11 +80,12 @@ const RecordScreen = () => {
       document.body.removeChild(downloadLink);
     }
 
-    
     return (
       <div>
-        <button id='start' onClick={start_click}><span>start recording</span></button>
-        <button id='stop' onClick={stop_click}>stop recording</button>
+        {recording ? 
+          <button id='stop' onClick={stop_click}>stop recording</button> :
+          <button id='start' onClick={start_click}><span>start recording</span></button>
+        }
       </div>
     )
 
