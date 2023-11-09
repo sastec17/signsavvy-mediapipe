@@ -18,21 +18,24 @@ import '../App.css';
 import './AppRouter';
 import React, {useEffect, useRef} from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { useSpeechSynthesis } from 'react-speech-kit';
 import {
   GestureRecognizer,
   FilesetResolver,
   DrawingUtils
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
-import AppRouter from './AppRouter';
+import RecordScreen from '../components/ScreenRecord';
+import ToggleSwitch from '../components/ToggleSwitch';
 
 let gestureRecognizer = GestureRecognizer;
 let webcamRunning = false;
 let runningMode = "IMAGE";
 let usedBefore=false;
-
 const demosSection = document.getElementById("demos");
 const videoHeight = "360px";
 const videoWidth = "480px";
+var val = '';
+let speech_bool = false;
 
 // TODO - Replace modelAssetPath with local path to pre-trained set - Do we need to include additional data to this?
 const createGestureRecognizer = async () => {
@@ -58,28 +61,29 @@ createGestureRecognizer();
 function App() {
   // vars that rely on application to render first
   const videoRef=useRef(null);
-  const canvasRef=useRef(null);
-  
-  const handleClick = () => {
-    const element = document.getElementById('myButton');
-    if (element) {
-      element.style.backgroundColor = 'green';
-      element.style.color = 'white'; 
-      element.style.border = 'none'; 
-      element.style.padding = '10px 20px'; 
-      element.style.borderRadius = '10px'; 
-      element.style.cursor = 'pointer';
+  const canvasRef=useRef(null); 
+  const [speech, setSpeech] = useState(false) 
+  const speechRef=useRef(speech)
+  let mediaRecorder;
+
+  // text to speech variables
+  const [value, setValue] = useState('');
+  const { speak } = useSpeechSynthesis();
+  // TODO: Make this functional with useState() - lagged for some
+  useEffect(() => {
+    if (usedBefore) { enableCam() }
+    return () => {
+      console.log('here')
+      if (webcamRunning == true) {
+        webcamRunning = false;
+        usedBefore=true;
+      }
     }
-  }
+  }, [])
   // Check if webcam access is supported.
   function hasGetUserMedia() {
     return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
   }
-
-  if (videoRef.current !== null) {
-    console.log('now')
-  }
- 
   // openWebCam
   function enableCam(event) {
     if (hasGetUserMedia()) {
@@ -113,7 +117,7 @@ function App() {
   let lastVideoTime = -1;
   let results = undefined;
   async function predictWebcam() {
-    console.log("start web cam")
+    // console.log("start web cam")
     const webcamElement = document.getElementById("webcam");
     if (runningMode === "IMAGE") {
       runningMode = "VIDEO";
@@ -125,7 +129,6 @@ function App() {
       lastVideoTime = videoRef.current.currentTime;
       results = gestureRecognizer.recognizeForVideo(videoRef.current, nowInMs);
     }
-    console.log(canvasRef);
     const canvasElement = canvasRef.current;
     const canvasCtx = canvasElement.getContext("2d");
     canvasCtx.save();
@@ -137,7 +140,6 @@ function App() {
     webcamElement.style.width = videoWidth;
 
     if (results.landmarks) {
-      console.log('made it into landmarks')
       for (const landmarks of results.landmarks) {
         drawingUtils.drawConnectors(
           landmarks,
@@ -154,12 +156,14 @@ function App() {
       }
     }
     canvasCtx.restore();
+    var categoryName = '';
+    var categoryScore = 0;
     const gestureOutput = document.getElementById("gesture_output");
     if (results.gestures.length > 0) {
       gestureOutput.style.display = "block";
       gestureOutput.style.width = videoWidth;
-      const categoryName = results.gestures[0][0].categoryName;
-      const categoryScore = parseFloat(
+      categoryName = results.gestures[0][0].categoryName;
+      categoryScore = parseFloat(
         results.gestures[0][0].score * 100
       ).toFixed(2);
       const handedness = results.handednesses[0][0].displayName;
@@ -168,26 +172,25 @@ function App() {
     } else {
       gestureOutput.style.display = "none";
     }
-    console.log(webcamRunning)
+    if (val !== categoryName && speech_bool == true && categoryScore > 70) {
+      speak({text: categoryName})
+      val = categoryName
+    }
+
     if (webcamRunning === true) {
       window.requestAnimationFrame(predictWebcam);
     }
   }
-
-  useEffect(() => {
-    if (usedBefore) { enableCam() }
-    return () => {
-      console.log('here')
-      webcamRunning = false;
-      usedBefore=true;
-    }
-  }, [])
-
+  const handleChange = val => { 
+    console.log('made it')
+    speech_bool = val;}
   return (
     <div className="App">
       <h1>Translation Page</h1>
       <p>Real-Time Translation</p>
       <p>Enable WebCam and begin signing</p>
+      <ToggleSwitch label={'Text to Speech'} checked={speech_bool} setChecked={handleChange}></ToggleSwitch>
+     <RecordScreen></RecordScreen>
       <header className="App-header">
         <section id="demos" className="invisible">
           <div id="liveView" className="videoView">
@@ -196,7 +199,6 @@ function App() {
               <span className="mdc-button-label">Click to Enable Webcam</span>
             </button>
           </div>
-    
           <div style={{position: 'relative'}}> 
             <video ref={videoRef} id="webcam" autoPlay playsInline></video>
             <canvas className='output_canvas' id='output_canvas' ref={canvasRef} 

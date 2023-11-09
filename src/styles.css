@@ -1,3 +1,4 @@
+
 /*
    Styles for SignSavvy Web App
    Description: This stylesheet contains the main styles for the SignSavvy web application.
@@ -117,14 +118,14 @@
     opacity: 1;
   }
   
-  /* Tooltip Icon Styling */
+  /* Tooltip Icon Style */
   .tooltip-icon {
     width: 40px;
     height: 40px;
     margin-top: -5px;
   }
   
-  /* Navigation Bar Styling */
+  /* navbar styling */
   nav {
     display: flex;
     justify-content: center; /* Center the content horizontally */
@@ -139,6 +140,19 @@
     color: white;
     margin: 0 20px; /* Add spacing between links */
     font-weight: bold;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Title Styling */
+  .title {
+    text-align: center;
+    color: white; /* White font color */
+    font-size: 24px; /* Adjust the font size as needed */
+    margin: 0;
+    padding-bottom: 20px;
   }
   
   nav a:hover {
