@@ -16,7 +16,7 @@
 
 import '../App.css';
 import './AppRouter';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import {
