@@ -1,17 +1,55 @@
 // Welcome / Login screen
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Login = (props) => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   const navigate = useNavigate();
 
   const onButtonClick = () => {
-    navigate("/");
+    if (username == "") {
+      alert("Enter a username");
+    } else if (password == "") {
+      alert("Enter a password");
+    } else {
+      try {
+        /*var data = JSON.stringify({
+          Password: password,
+          Username: username,
+        });*/
+
+        //alert(username);
+        const details = Cookies.get(username);
+        if (details == null) {
+          alert("User does not exist");
+        }
+        const json = JSON.parse(details);
+        const temp = json.password;
+        if (temp !== password) {
+          alert("Invalid password");
+        } else {
+          Cookies.set("login", username);
+          navigate("/");
+        }
+        //await AsyncStorage.setItem(username, password);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    /*try {
+      if (!Cookies.get("name")) {
+        alert("User does not exist");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    */
   };
   const onButtonCreate = () => {
     navigate("/create-account");
@@ -24,12 +62,12 @@ const Login = (props) => {
       <br />
       <div className={"inputContainer"}>
         <input
-          value={email}
-          placeholder="Enter your email here"
-          onChange={(ev) => setEmail(ev.target.value)}
+          value={username}
+          placeholder="Enter your username here"
+          onChange={(ev) => setUsername(ev.target.value)}
           className={"inputBox"}
         />
-        <label className="errorLabel">{emailError}</label>
+        <label className="errorLabel">{usernameError}</label>
       </div>
       <br />
       <div className={"inputContainer"}>
