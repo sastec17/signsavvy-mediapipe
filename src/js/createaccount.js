@@ -13,21 +13,33 @@ const Create = (props) => {
   const navigate = useNavigate();
 
   const onButtonClick = () => {
-    const data = JSON.stringify({
-      firstName: FirstName,
-      lastName: LastName,
-      username: username,
-      password: password,
-      fontsize: undefined,
-      fontcolor: undefined,
-      backgroundColor: undefined,
-    });
-    Cookies.set("login", username);
-    Cookies.set("name", FirstName);
-    Cookies.set(username, data);
-    //
-    navigate("/");
-    // You'll update this function later...
+    if (username == "") {
+      alert("Enter a username");
+    } else if (password == "") {
+      alert("Enter a password");
+    }
+    // TODO - SAVE USERNAME AND PASSWORD IN DB AND LOGIN AS USER
+    else {
+      try {
+        const data = JSON.stringify({
+          firstName: FirstName,
+          lastName: LastName,
+          username: username,
+          password: password,
+          fontsize: undefined,
+          fontcolor: undefined,
+          backgroundColor: undefined,
+        });
+        Cookies.set("login", username);
+        Cookies.set("name", FirstName);
+        Cookies.set(username, data);
+        //
+        navigate("/");
+        // You'll update this function later...
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
