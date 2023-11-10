@@ -12,9 +12,9 @@ const Login = (props) => {
   const navigate = useNavigate();
 
   const onButtonClick = () => {
-    if (username == "") {
+    if (username === "") {
       alert("Enter a username");
-    } else if (password == "") {
+    } else if (password === "") {
       alert("Enter a password");
     } else {
       try {

@@ -26,9 +26,9 @@ const Create = (props) => {
           lastName: LastName,
           username: username,
           password: password,
-          fontsize: undefined,
-          fontcolor: undefined,
-          backgroundColor: undefined,
+          fontsize: "16px",
+          fontcolor: "#000000",
+          backgroundColor: "#FFFFFF",
         });
         Cookies.set("login", username);
         Cookies.set("name", FirstName);
