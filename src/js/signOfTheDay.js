@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 function SignOfTheDay() {
+  let navigate = useNavigate();
   const [signName, setSignName] = useState("");
   const [isPlaying, setIsPlaying] = useState(false);
   const [temp, setTemp] = useState("");
@@ -24,11 +26,14 @@ function SignOfTheDay() {
     }
   };
   useEffect(() => {
-    const Data = Cookies.get("name");
-    const storedData = Cookies.get("login");
-    const storedData2 = Cookies.get(storedData);
-    const json = JSON.parse(storedData2);
-    setTemp(json.firstName);
+    if (Cookies.get("login")) {
+      const storedData = Cookies.get("login");
+      const storedData2 = Cookies.get(storedData);
+      const json = JSON.parse(storedData2);
+      setTemp(json.firstName);
+    } else {
+      navigate("/login");
+    }
   });
   return (
     <div className="container">

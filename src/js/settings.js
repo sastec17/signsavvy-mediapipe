@@ -67,6 +67,7 @@ const Settings = () => {
   const logout = async () => {
     try {
       navigate("/login");
+      Cookies.remove("login", { path: "" });
     } catch (error) {
       console.log(error);
     }
