@@ -23,8 +23,9 @@ const Settings = ({ updateLoginStatus }) => {
       const value = Cookies.get("login");
       setName(value);
       setUsername(value);
-      const storedData = Cookies.get(value);
-      const json = JSON.parse(storedData);
+      const storedData = Cookies.get("login");
+      const storedData2 = Cookies.get(storedData);
+      const json = JSON.parse(storedData2);
       setFontSize(json.fontsize);
       setFontColor(json.fontcolor);
       setFontBackgroundColor(json.backgroundColor);
@@ -129,6 +130,10 @@ const Settings = ({ updateLoginStatus }) => {
             <h2>User Preferences</h2>
             <label className="tooltip">
               Font Size
+              <img
+                src="question_mark_tooltip.png"
+                className="info-icon tooltip-icon"
+              />
               <span className="tooltip-text">
                 This will adjust the translation text font size on the
                 Translation Page.
@@ -148,6 +153,10 @@ const Settings = ({ updateLoginStatus }) => {
             </select>
             <label className="tooltip">
               Translation Font Color
+              <img
+                src="question_mark_tooltip.png"
+                className="info-icon tooltip-icon"
+              />
               <span className="tooltip-text">
                 This will adjust the translation text color on the Translation
                 Page.
@@ -161,6 +170,10 @@ const Settings = ({ updateLoginStatus }) => {
             />
             <label className="tooltip">
               Translation Font Background Color
+              <img
+                src="question_mark_tooltip.png"
+                className="info-icon tooltip-icon"
+              />
               <span className="tooltip-text">
                 This will adjust the translation text background color on the
                 Translation Page.

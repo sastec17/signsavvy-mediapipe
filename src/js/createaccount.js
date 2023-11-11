@@ -8,25 +8,25 @@ const CreateAccount = (props) => {
   const { updateLoginStatus } = props; // Destructuring the function from props
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [FirstName, setFirstName] = useState("");
+  const [LastName, setLastName] = useState("");
 
   const navigate = useNavigate();
 
   const onButtonClick = () => {
-    if (username === "") {
+    if (username == "") {
       alert("Enter a username");
-    } else if (password === "") {
+    } else if (password == "") {
       alert("Enter a password");
-    } else if (firstName === "") {
+    } else if (FirstName == "") {
       alert("Enter your first name");
-    } else if (lastName === "") {
+    } else if (LastName == "") {
       alert("Enter your last name");
     } else {
       try {
         const data = JSON.stringify({
-          firstName: firstName,
-          lastName: lastName,
+          firstName: FirstName,
+          lastName: LastName,
           username: username,
           password: password,
           fontsize: "16px",
@@ -34,7 +34,7 @@ const CreateAccount = (props) => {
           backgroundColor: "#FFFFFF",
         });
         Cookies.set("login", username);
-        Cookies.set("name", firstName);
+        Cookies.set("name", FirstName);
         Cookies.set(username, data);
         updateLoginStatus(true); // Update login status
         navigate("/");
