@@ -1,10 +1,11 @@
 // Create Account
 // Welcome / Login screen
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-const Create = (props) => {
+const CreateAccount = (props) => {
+  const { updateLoginStatus } = props; // Destructuring the function from props
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [FirstName, setFirstName] = useState("");
@@ -18,25 +19,26 @@ const Create = (props) => {
       alert("Enter a username");
     } else if (password == "") {
       alert("Enter a password");
-    }
-    // TODO - SAVE USERNAME AND PASSWORD IN DB AND LOGIN AS USER
-    else {
+    } else if (FirstName == "") {
+      alert("Enter your first name");
+    } else if (LastName == "") {
+      alert("Enter your last name");
+    } else {
       try {
         const data = JSON.stringify({
           firstName: FirstName,
           lastName: LastName,
           username: username,
           password: password,
-          fontsize: undefined,
-          fontcolor: undefined,
-          backgroundColor: undefined,
+          fontsize: "16px",
+          fontcolor: "#000000",
+          backgroundColor: "#FFFFFF",
         });
         Cookies.set("login", username);
         Cookies.set("name", FirstName);
         Cookies.set(username, data);
-        //
+        updateLoginStatus(true); // Update login status
         navigate("/");
-        // You'll update this function later...
       } catch (error) {
         console.log(error);
       }
@@ -101,4 +103,4 @@ const Create = (props) => {
   );
 };
 
-export default Create;
+export default CreateAccount;
