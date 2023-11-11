@@ -8,7 +8,7 @@ const RecordScreen = () => {
 
     const start_click = async() => {
       let stream = await recordScreen();
-      let mimeType = 'video/mp4';
+      let mimeType = 'video/webm';
       const recorder = createRecorder(stream, mimeType);
       setMediaRecorder(recorder);
       setMediaStream(stream);
@@ -67,12 +67,12 @@ const RecordScreen = () => {
 
     function saveFile(recordedChunks) {
       const blob = new Blob(recordedChunks, {
-        type: 'video/mp4'
+        type: 'video/webm'
       });
       let filename = window.prompt('Enter file name'),
       downloadLink = document.createElement('a');
       downloadLink.href = URL.createObjectURL(blob);
-      downloadLink.download = `${filename}.mp4`;
+      downloadLink.download = `${filename}.webm`;
   
       document.body.appendChild(downloadLink);
       downloadLink.click();

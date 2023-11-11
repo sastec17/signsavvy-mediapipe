@@ -16,40 +16,26 @@
 
 import '../App.css';
 import './AppRouter';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-<<<<<<< HEAD
 import { useSpeechSynthesis } from 'react-speech-kit';
-=======
->>>>>>> main
 import {
   GestureRecognizer,
   FilesetResolver,
   DrawingUtils
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
-<<<<<<< HEAD
 import RecordScreen from '../components/ScreenRecord';
 import ToggleSwitch from '../components/ToggleSwitch';
-=======
-import AppRouter from './AppRouter';
->>>>>>> main
 
 let gestureRecognizer = GestureRecognizer;
 let webcamRunning = false;
 let runningMode = "IMAGE";
 let usedBefore=false;
-<<<<<<< HEAD
 const demosSection = document.getElementById("demos");
 const videoHeight = "360px";
 const videoWidth = "480px";
 var val = '';
 let speech_bool = false;
-=======
-
-const demosSection = document.getElementById("demos");
-const videoHeight = "360px";
-const videoWidth = "480px";
->>>>>>> main
 
 // TODO - Replace modelAssetPath with local path to pre-trained set - Do we need to include additional data to this?
 const createGestureRecognizer = async () => {
@@ -77,9 +63,8 @@ function App() {
   const videoRef=useRef(null);
   const canvasRef=useRef(null); 
   const [speech, setSpeech] = useState(false) 
-  const speechRef=useRef(speech)
-  let mediaRecorder;
-
+  const [shouldSpeech, setShouldSpeech] = useState(false);
+  const shouldSpeechRef = useRef(shouldSpeech); // Create a ref to keep track of shouldSpeech
   // text to speech variables
   const [value, setValue] = useState('');
   const { speak } = useSpeechSynthesis();
@@ -98,14 +83,6 @@ function App() {
   function hasGetUserMedia() {
     return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
   }
-<<<<<<< HEAD
-=======
-
-  if (videoRef.current !== null) {
-    console.log('now')
-  }
- 
->>>>>>> main
   // openWebCam
   function enableCam(event) {
     if (hasGetUserMedia()) {
@@ -135,6 +112,7 @@ function App() {
       console.warn("getUserMedia() is not supported by your browser")
     }
   }
+  console.log('Render - shouldSpeech:', shouldSpeech);
 
   let lastVideoTime = -1;
   let results = undefined;
@@ -194,41 +172,31 @@ function App() {
     } else {
       gestureOutput.style.display = "none";
     }
-<<<<<<< HEAD
-    if (val !== categoryName && speech_bool == true && categoryScore > 70) {
+    console.log("shouldSpeechRef", shouldSpeechRef.current)
+    if (val !== categoryName && shouldSpeechRef.current  == true && categoryScore > 70) {
       speak({text: categoryName})
       val = categoryName
     }
 
-=======
-    console.log(webcamRunning)
->>>>>>> main
     if (webcamRunning === true) {
       window.requestAnimationFrame(predictWebcam);
     }
   }
-<<<<<<< HEAD
-  const handleChange = val => { 
-    console.log('made it')
-    speech_bool = val;}
-=======
 
-  useEffect(() => {
-    if (usedBefore) { enableCam() }
-    return () => {
-      console.log('here')
-      webcamRunning = false;
-      usedBefore=true;
-    }
-  }, [])
-
->>>>>>> main
+  const handleCheckboxChange = () => {
+    setShouldSpeech(prevShouldSpeech => {
+      shouldSpeechRef.current = !prevShouldSpeech; // Update the ref directly
+      return !prevShouldSpeech;
+    });
+  };
+  
   return (
     <div className="App">
       <h1>Translation Page</h1>
       <p>Real-Time Translation</p>
       <p>Enable WebCam and begin signing</p>
-      <ToggleSwitch label={'Text to Speech'} checked={speech_bool} setChecked={handleChange}></ToggleSwitch>
+
+     <ToggleSwitch label={'Text to Speech'} checked={shouldSpeechRef.current} setChecked={handleCheckboxChange}></ToggleSwitch>
      <RecordScreen></RecordScreen>
       <header className="App-header">
         <section id="demos" className="invisible">
