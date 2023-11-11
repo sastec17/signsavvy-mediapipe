@@ -52,7 +52,7 @@ const CreateAccount = (props) => {
       <br />
       <div className={"inputContainer"}>
         <input
-          value={firstName}
+          value={FirstName}
           placeholder="Enter your first name here"
           onChange={(ev) => setFirstName(ev.target.value)}
           className={"inputBox"}
@@ -61,7 +61,7 @@ const CreateAccount = (props) => {
       <br />
       <div className={"inputContainer"}>
         <input
-          value={lastName}
+          value={LastName}
           placeholder="Enter your last name here"
           onChange={(ev) => setLastName(ev.target.value)}
           className={"inputBox"}
