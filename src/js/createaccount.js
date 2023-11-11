@@ -1,29 +1,32 @@
 // Create Account
 // Welcome / Login screen
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-const Create = (props) => {
+const CreateAccount = (props) => {
+  const { updateLoginStatus } = props; // Destructuring the function from props
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [FirstName, setFirstName] = useState("");
-  const [LastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   const navigate = useNavigate();
 
   const onButtonClick = () => {
-    if (username == "") {
+    if (username === "") {
       alert("Enter a username");
-    } else if (password == "") {
+    } else if (password === "") {
       alert("Enter a password");
-    }
-    // TODO - SAVE USERNAME AND PASSWORD IN DB AND LOGIN AS USER
-    else {
+    } else if (firstName === "") {
+      alert("Enter your first name");
+    } else if (lastName === "") {
+      alert("Enter your last name");
+    } else {
       try {
         const data = JSON.stringify({
-          firstName: FirstName,
-          lastName: LastName,
+          firstName: firstName,
+          lastName: lastName,
           username: username,
           password: password,
           fontsize: "16px",
@@ -31,11 +34,10 @@ const Create = (props) => {
           backgroundColor: "#FFFFFF",
         });
         Cookies.set("login", username);
-        Cookies.set("name", FirstName);
+        Cookies.set("name", firstName);
         Cookies.set(username, data);
-        //
+        updateLoginStatus(true); // Update login status
         navigate("/");
-        // You'll update this function later...
       } catch (error) {
         console.log(error);
       }
@@ -50,7 +52,7 @@ const Create = (props) => {
       <br />
       <div className={"inputContainer"}>
         <input
-          value={FirstName}
+          value={firstName}
           placeholder="Enter your first name here"
           onChange={(ev) => setFirstName(ev.target.value)}
           className={"inputBox"}
@@ -59,7 +61,7 @@ const Create = (props) => {
       <br />
       <div className={"inputContainer"}>
         <input
-          value={LastName}
+          value={lastName}
           placeholder="Enter your last name here"
           onChange={(ev) => setLastName(ev.target.value)}
           className={"inputBox"}
@@ -96,4 +98,4 @@ const Create = (props) => {
   );
 };
 
-export default Create;
+export default CreateAccount;
