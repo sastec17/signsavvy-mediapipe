@@ -63,9 +63,8 @@ function App() {
   const videoRef=useRef(null);
   const canvasRef=useRef(null); 
   const [speech, setSpeech] = useState(false) 
-  const speechRef=useRef(speech)
-  let mediaRecorder;
-
+  const [shouldSpeech, setShouldSpeech] = useState(false);
+  const shouldSpeechRef = useRef(shouldSpeech); // Create a ref to keep track of shouldSpeech
   // text to speech variables
   const [value, setValue] = useState('');
   const { speak } = useSpeechSynthesis();
@@ -113,6 +112,7 @@ function App() {
       console.warn("getUserMedia() is not supported by your browser")
     }
   }
+  console.log('Render - shouldSpeech:', shouldSpeech);
 
   let lastVideoTime = -1;
   let results = undefined;
@@ -172,7 +172,8 @@ function App() {
     } else {
       gestureOutput.style.display = "none";
     }
-    if (val !== categoryName && speech_bool == true && categoryScore > 70) {
+    console.log("shouldSpeechRef", shouldSpeechRef.current)
+    if (val !== categoryName && shouldSpeechRef.current  == true && categoryScore > 70) {
       speak({text: categoryName})
       val = categoryName
     }
@@ -181,15 +182,21 @@ function App() {
       window.requestAnimationFrame(predictWebcam);
     }
   }
-  const handleChange = val => { 
-    console.log('made it')
-    speech_bool = val;}
+
+  const handleCheckboxChange = () => {
+    setShouldSpeech(prevShouldSpeech => {
+      shouldSpeechRef.current = !prevShouldSpeech; // Update the ref directly
+      return !prevShouldSpeech;
+    });
+  };
+  
   return (
     <div className="App">
       <h1>Translation Page</h1>
       <p>Real-Time Translation</p>
       <p>Enable WebCam and begin signing</p>
-      <ToggleSwitch label={'Text to Speech'} checked={speech_bool} setChecked={handleChange}></ToggleSwitch>
+
+     <ToggleSwitch label={'Text to Speech'} checked={shouldSpeechRef.current} setChecked={handleCheckboxChange}></ToggleSwitch>
      <RecordScreen></RecordScreen>
       <header className="App-header">
         <section id="demos" className="invisible">
