@@ -14,7 +14,6 @@ const CreateAccount = (props) => {
   const navigate = useNavigate();
 
   const onButtonClick = () => {
-<<<<<<< HEAD
     if (username == "") {
       alert("Enter a username");
     } else if (password == "") {
@@ -43,10 +42,6 @@ const CreateAccount = (props) => {
         console.log(error);
       }
     }
-=======
-    navigate("/");
-    // You'll update this function later...
->>>>>>> main
   };
 
   return (
