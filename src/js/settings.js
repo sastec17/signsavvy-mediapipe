@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./styles.css";
 import Cookies from "js-cookie";
 
-const Settings = () => {
+const Settings = ({ updateLoginStatus }) => {
   const [username, setUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -12,7 +12,7 @@ const Settings = () => {
   const [fontSize, setFontSize] = useState(""); // Default font size
   const [fontColor, setFontColor] = useState(""); // Default font color
   const [fontBackgroundColor, setFontBackgroundColor] = useState(""); // Default font background color
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     retrieveData();
@@ -20,12 +20,11 @@ const Settings = () => {
 
   const retrieveData = async () => {
     try {
-      const value = Cookies.get("login"); // TODO: Replace this with database retrieval logic
+      const value = Cookies.get("login");
       setName(value);
       setUsername(value);
-      const storedData = Cookies.get("login");
-      const storedData2 = Cookies.get(storedData);
-      const json = JSON.parse(storedData2);
+      const storedData = Cookies.get(value);
+      const json = JSON.parse(storedData);
       setFontSize(json.fontsize);
       setFontColor(json.fontcolor);
       setFontBackgroundColor(json.backgroundColor);
@@ -54,6 +53,7 @@ const Settings = () => {
       Cookies.set(username, JSON.stringify(json));
     }
   };
+
   const onPressSave2 = () => {
     alert("User Preferences have been saved.");
     const value = Cookies.get(username);
@@ -64,13 +64,10 @@ const Settings = () => {
     Cookies.set(username, JSON.stringify(json));
   };
 
-  const logout = async () => {
-    try {
-      navigate("/login");
-      Cookies.remove("login", { path: "" });
-    } catch (error) {
-      console.log(error);
-    }
+  const logout = () => {
+    updateLoginStatus(false); // Update login status
+    navigate("/login");
+    Cookies.remove("login", { path: "" });
   };
 
   return (
@@ -132,10 +129,6 @@ const Settings = () => {
             <h2>User Preferences</h2>
             <label className="tooltip">
               Font Size
-              <img
-                src="question_mark_tooltip.png"
-                className="info-icon tooltip-icon"
-              />
               <span className="tooltip-text">
                 This will adjust the translation text font size on the
                 Translation Page.
@@ -155,10 +148,6 @@ const Settings = () => {
             </select>
             <label className="tooltip">
               Translation Font Color
-              <img
-                src="question_mark_tooltip.png"
-                className="info-icon tooltip-icon"
-              />
               <span className="tooltip-text">
                 This will adjust the translation text color on the Translation
                 Page.
@@ -172,10 +161,6 @@ const Settings = () => {
             />
             <label className="tooltip">
               Translation Font Background Color
-              <img
-                src="question_mark_tooltip.png"
-                className="info-icon tooltip-icon"
-              />
               <span className="tooltip-text">
                 This will adjust the translation text background color on the
                 Translation Page.

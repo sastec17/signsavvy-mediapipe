@@ -1,9 +1,10 @@
 // Welcome / Login screen
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const Login = (props) => {
+  const { updateLoginStatus } = props; // Destructuring the function from props
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameError, setUsernameError] = useState("");
@@ -18,12 +19,6 @@ const Login = (props) => {
       alert("Enter a password");
     } else {
       try {
-        /*var data = JSON.stringify({
-          Password: password,
-          Username: username,
-        });*/
-
-        //alert(username);
         const details = Cookies.get(username);
         if (details == null) {
           alert("User does not exist");
@@ -34,26 +29,19 @@ const Login = (props) => {
           alert("Invalid password");
         } else {
           Cookies.set("login", username);
+          updateLoginStatus(true); // Update login status
           navigate("/");
         }
-        //await AsyncStorage.setItem(username, password);
       } catch (error) {
         console.log(error);
       }
     }
-    /*try {
-      if (!Cookies.get("name")) {
-        alert("User does not exist");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-
-    */
   };
+
   const onButtonCreate = () => {
     navigate("/create-account");
   };
+
   return (
     <div className={"mainContainer"}>
       <div className={"titleContainer"}>
