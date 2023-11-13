@@ -1,172 +1,204 @@
-
 /*
    Styles for SignSavvy Web App
    Description: This stylesheet contains the main styles for the SignSavvy web application.
 */
 
 .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  margin: 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: white;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.header {
+  font-weight: bold;
+  font-size: 40px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.label {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 12px 0;
+  font-size: 16px;
+}
+
+.saveButton,
+.logoutButton {
+  width: 100%;
+  padding: 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin: 10px 0;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.saveButton:hover,
+.logoutButton:hover {
+  background-color: #0056b3;
+}
+
+.tab-menu {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tab-menu li {
+  cursor: pointer;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px 10px 0 0;
+  background-color: #f7f7f7;
+  color: #333;
+}
+
+.tab-menu li.active {
+  background-color: #0056b3;
+  border: none;
+  color: white;
+}
+
+.tab-content {
+  border: 1px solid #ccc;
+  border-radius: 0 0 10px 10px;
+  background-color: #f7f7f7;
+  padding: 20px;
+}
+
+.info-icon {
+  font-size: 16px;
+  color: #0078d4;
+  /* Customize the color of the icon */
+  cursor: pointer;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+.tooltip {
+  position: relative;
+}
+
+.tooltip-text {
+  display: none;
+  position: relative;
+  background-color: #6CB2EB;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 12px;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 1;
+}
+
+.tooltip-icon:hover+.tooltip-text {
+  display: block;
+  opacity: 1;
+}
+
+/* Tooltip Icon Style */
+.tooltip-icon {
+  width: 40px;
+  height: 40px;
+  margin-top: -5px;
+}
+
+/* navbar styling */
+nav {
+  display: flex;
+  justify-content: center;
+  /* Center the content horizontally */
+  align-items: center;
+  /* Center the content vertically */
+  background-color: #0056b3;
+  /* Match your desired blue color */
+  height: 100px;
+  /* Adjust the height as needed */
+  margin-bottom: 10px;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  margin: 0 20px;
+  /* Add spacing between links */
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Title Styling */
+.title {
+  text-align: center;
+  color: white;
+  /* White font color */
+  font-size: 24px;
+  /* Adjust the font size as needed */
+  margin: 0;
+  padding-bottom: 20px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Title Styling */
+.title {
+  text-align: center;
+  color: white;
+  /* White font color */
+  font-size: 24px;
+  /* Adjust the font size as needed */
+  margin: 0;
+  padding-bottom: 20px;
+}
+
+/* For mobile screens */
+/* For mobile screens */
+@media (max-width: 768px) {
+  nav {
+    height: auto;
+    /* Allow the height to adjust to content */
+    padding: 10px;
+    /* Adjust the padding as needed */
+    margin-bottom: 10px;
+    /* Adjust the margin as needed */
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-    margin: 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: white;
-    max-width: 500px;
-    margin: 0 auto;
-  }
-  
-  .header {
-    font-weight: bold;
-    font-size: 40px;
-    margin: 20px 0;
-    text-align: center;
-  }
-  
-  .label {
-    font-size: 16px;
-    margin: 10px 0;
-  }
-  
-  .input {
-    width: 100%;
-    padding: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin: 12px 0;
-    font-size: 16px;
-  }
-  
-  .saveButton,
-  .logoutButton {
-    width: 100%;
-    padding: 10px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin: 10px 0;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .saveButton:hover,
-  .logoutButton:hover {
-    background-color: #0056b3;
+    flex-wrap: wrap;
+    /* Allow items to wrap to the next line */
+    justify-content: center;
   }
 
-  .tab-menu {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .tab-menu li {
-    cursor: pointer;
-    padding: 10px 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px 10px 0 0;
-    background-color: #f7f7f7;
-    color: #333;
-  }
-  
-  .tab-menu li.active {
-    background-color: #0056b3;
-    border: none;
-    color: white;
-  }
-  
-  .tab-content {
-    border: 1px solid #ccc;
-    border-radius: 0 0 10px 10px;
-    background-color: #f7f7f7;
-    padding: 20px;
-  }
-  
-  .info-icon {
-    font-size: 16px;
-    color: #0078d4; /* Customize the color of the icon */
-    cursor: pointer;
-    vertical-align: middle;
-    margin-left: 5px;
-  }
-  
-  .tooltip {
-    position: relative;
-  }
-  
-  .tooltip-text {
-    display: none;
-    position: relative;
-    background-color: #6CB2EB;
-    color: #fff;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 12px;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: opacity 0.3s;
-    z-index: 1;
-  }
-  
-  .tooltip-icon:hover + .tooltip-text {
-    display: block;
-    opacity: 1;
-  }
-  
-  /* Tooltip Icon Style */
-  .tooltip-icon {
-    width: 40px;
-    height: 40px;
-    margin-top: -5px;
-  }
-  
-  /* navbar styling */
-  nav {
-    display: flex;
-    justify-content: center; /* Center the content horizontally */
-    align-items: center; /* Center the content vertically */
-    background-color: #0056b3; /* Match your desired blue color */
-    height: 100px; /* Adjust the height as needed */
-    margin-bottom: 10px;
-  }
-  
   nav a {
-    text-decoration: none;
-    color: white;
-    margin: 0 20px; /* Add spacing between links */
-    font-weight: bold;
+    width: 60%;
+    /* Make each link take up 50% of the available space */
+    font-size: 14px;
+    /* Adjust the font size as needed */
+    margin: 10px;
+    /* Adjust the margin as needed */
   }
-  
-  nav a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Title Styling */
-  .title {
-    text-align: center;
-    color: white; /* White font color */
-    font-size: 24px; /* Adjust the font size as needed */
-    margin: 0;
-    padding-bottom: 20px;
-  }
-  
-  nav a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Title Styling */
-  .title {
-    text-align: center;
-    color: white; /* White font color */
-    font-size: 24px; /* Adjust the font size as needed */
-    margin: 0;
-    padding-bottom: 20px;
-  }
-  
-  
-  
+}
