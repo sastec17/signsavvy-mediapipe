@@ -26,6 +26,8 @@ import {
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
 import RecordScreen from '../components/ScreenRecord';
 import ToggleSwitch from '../components/ToggleSwitch';
+//import StylingContext, { StylingProvider } from './StylingContext';
+import {useStyling} from './StylingContext';
 
 let gestureRecognizer = GestureRecognizer;
 let webcamRunning = false;
@@ -68,6 +70,16 @@ function App() {
   // text to speech variables
   const [value, setValue] = useState('');
   const { speak } = useSpeechSynthesis();
+  
+  // variables for user preferences to alter translation text
+  const { fontSize, fontColor, fontBackgroundColor } = useStyling();
+  const translationTextStyle = {
+    fontSize: fontSize || "24px", // Use a default value if fontSize is not set
+    color: fontColor || "black", // Use a default value if fontColor is not set
+    backgroundColor: fontBackgroundColor || "white", // Use a default value if fontBackgroundColor is not set
+  };
+  
+  
   // TODO: Make this functional with useState() - lagged for some
   useEffect(() => {
     if (usedBefore) { enableCam() }
@@ -210,7 +222,7 @@ function App() {
             <video ref={videoRef} id="webcam" autoPlay playsInline></video>
             <canvas className='output_canvas' id='output_canvas' ref={canvasRef} 
                     style={{width: '1280', height: '720', position: 'absolute', left: '0px', top: '0px'}}></canvas>
-            <p id='gesture_output' className="output"></p>
+            <p style={translationTextStyle} id='gesture_output' className="output"></p>
           </div>
         </section>
       </header>
