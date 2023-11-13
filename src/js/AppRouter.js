@@ -9,6 +9,7 @@ import CreateAccount from './createaccount';
 import SignOfTheDay from './signOfTheDay';
 import Error from './error';
 import App from './App';
+import { StylingProvider } from './StylingContext';
 
 const AppRouter = () => {
   // Retrieve the login status from localStorage on component mount
@@ -29,6 +30,7 @@ const AppRouter = () => {
   }, [isLoggedIn]);
 
   return (
+    <StylingProvider>
     <Router>
       <nav>
         <div className="navbar">
@@ -66,6 +68,7 @@ const AppRouter = () => {
       {!isLoggedIn && <Link to="/login">Login</Link>}
       {!isLoggedIn && <Link to="/create-account">Create Account</Link>}
     </Router>
+    </StylingProvider>
   );
 };
 

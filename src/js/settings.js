@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles.css";
 import Cookies from "js-cookie";
+import { useStyling } from "./StylingContext";
 
 const Settings = ({ updateLoginStatus }) => {
   const [username, setUsername] = useState("");
@@ -9,10 +10,15 @@ const Settings = ({ updateLoginStatus }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const [selectedTab, setSelectedTab] = useState("your-account");
-  const [fontSize, setFontSize] = useState(""); // Default font size
-  const [fontColor, setFontColor] = useState(""); // Default font color
-  const [fontBackgroundColor, setFontBackgroundColor] = useState(""); // Default font background color
   const navigate = useNavigate();
+  const {
+    fontSize,
+    setFontSize,
+    fontColor,
+    setFontColor,
+    fontBackgroundColor,
+    setFontBackgroundColor,
+  } = useStyling();
 
   useEffect(() => {
     retrieveData();
