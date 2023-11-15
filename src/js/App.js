@@ -178,7 +178,11 @@ function App() {
       categoryScore = parseFloat(
         results.gestures[0][0].score * 100
       ).toFixed(2);
-      const handedness = results.handednesses[0][0].displayName;
+      let handedness = results.handednesses[0][0].displayName;
+      if (handedness == 'Right') {
+        handedness = 'Left';
+      }
+      else { handedness = 'Right'}
       gestureOutput.innerText = 
       `GestureRecognizer: ${categoryName}\n Confidence: ${categoryScore} %\n Handedness: ${handedness}`;
     } else {
