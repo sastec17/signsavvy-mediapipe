@@ -7,18 +7,21 @@ import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 assert tf.__version__.startswith('2')
-IMAGES_PATH = "archive/asl_alphabet_train/asl_alphabet_train2"
+IMAGES_PATH = "/Users/fisherwojtas/Downloads/archive2/asl_alphabet_train/asl_alphabet_train"
 
 # Get the list of labels from the list of folder names.
 labels = []
 for i in os.listdir(IMAGES_PATH):
   if os.path.isdir(os.path.join(IMAGES_PATH, i)):
     labels.append(i)
+print("printing labels:")
 print(labels)
+print("now creating data")
 data = gesture_recognizer.Dataset.from_folder(
     dirname=IMAGES_PATH,
     hparams=gesture_recognizer.HandDataPreprocessingParams()
 )
+print("data:")
 print(data)
 # Split the archive into training, validation and test dataset.
 train_data, rest_data = data.split(0.8)
