@@ -8,7 +8,7 @@ function SignOfTheDay() {
   const [temp, setTemp] = useState("");
 
   // The video source should point to the local video file
-  const videoSrc = "/signOfTheDay/23260.mp4";
+  const videoSrc = "/signOfTheDay/23315.mp4";
 
   const togglePlay = () => {
     const videoElement = document.getElementById("signVideo");
@@ -35,7 +35,7 @@ function SignOfTheDay() {
     <div className="container">
       <div>Welcome {temp}</div>
       <h1 className="header">Sign Of The Day:</h1>
-      <p style={{ fontSize: "24px", margin: "0" }}>PAINTER</p>
+      <p style={{ fontSize: "24px", margin: "0" }}>COST AN ARM AND A LEG</p>
       <div className="video-container">
         <video id="signVideo" controls style={{ transform: "scaleX(1)" }}>
           <source src={videoSrc} type="video/mp4" />
