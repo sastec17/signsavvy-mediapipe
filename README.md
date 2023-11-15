@@ -1,8 +1,32 @@
-# Getting Started with Create React App
+SignSavvy 
+===========================
+Real-Time Translation of ASL
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Initial Bootstrapping 
+* Open Mac Terminal
+* Install node.js for Mac [here](https://nodejs.org/en/download)
+* Open terminal - Move to desired root directory location (where you want the project to live)
+
+## Dealing with Git
+Run ```git clone https://github.com/sastec17/signsavvy-mediapipe.git``` - Make sure you accept my repo invite ahead of time!
+[More](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) about cloning repos if this doesn't work
+
+Run ```git remote -v ``` in integrated terminal
+
+Verify that it looks something like this:
+```
+origin	https://github.com/sastec17/signsavvy-mediapipe.git (fetch)
+origin	https://github.com/sastec17/signsavvy-mediapipe.git (push)
+```
+
+## Install Dependencies
+* Run ```sudo npm install``` -  You may need to enter your computer's login password. This will setup initial dependencies for this project
+  *  Note that this may require the use of the ```--force``` flag. We are still working out dependency issues :) 
+* Run ```npm start```
+
+## Available Scripts - Additional information
 
 In the project directory, you can run:
 
