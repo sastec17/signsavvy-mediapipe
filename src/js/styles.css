@@ -20,7 +20,7 @@
 
 .background {
   /* Other styles for your container */
-  background-image: url('../dot.jpeg');
+  background-image: url('../images/dot.jpeg');
   background-size: cover; /* Adjust to your preference */
   background-position: center; /* Adjust to your preference */
     /* Add more background properties as needed */
