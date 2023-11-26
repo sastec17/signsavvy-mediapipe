@@ -32,9 +32,14 @@ function SignOfTheDay() {
     }
   });
   return (
-    <div className="container">
+    <>
+    <header className="bg-white shadow flex items-center">
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <h1 className="text-3xl font-bold tracking-tight text-gray-900">Sign of the Day</h1>
+    </div>
+    </header>
+    <div className="flex flex-col items-center p-10 border-black rounded-10 max-w-500 mx-auto">
       <div>Welcome {temp}</div>
-      <h1 className="header">Sign Of The Day:</h1>
       <p style={{ fontSize: "24px", margin: "0" }}>COST AN ARM AND A LEG</p>
       <div className="video-container">
         <video id="signVideo" controls style={{ transform: "scaleX(1)" }}>
@@ -42,13 +47,8 @@ function SignOfTheDay() {
           Your browser does not support the video tag.
         </video>
       </div>
-      <div className="buttons">
-        <button onClick={togglePlay}>{isPlaying ? "Pause" : "Play"}</button>
-      </div>
-      <p className="copyright">
-        Video copyright: signingsavvy.com/signoftheday/
-      </p>
     </div>
+    </>
   );
 }
 

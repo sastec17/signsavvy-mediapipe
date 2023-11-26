@@ -83,8 +83,16 @@ const RecordScreen = () => {
     return (
       <div>
         {recording ? 
-          <button id='stop' onClick={stop_click}>stop recording</button> :
-          <button id='start' onClick={start_click}><span>start recording</span></button>
+          <button id="stop" onClick={stop_click}
+                  className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full">
+            <span>Stop recording</span>
+          </button>
+
+         :
+         <button id="start" onClick={start_click}
+                  className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full">
+            <span>Start recording</span>
+          </button>
         }
       </div>
     )

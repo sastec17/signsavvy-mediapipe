@@ -14,6 +14,17 @@
   background-color: white;
   max-width: 500px;
   margin: 0 auto;
+  margin-top: 3em;
+
+}
+
+.background {
+  /* Other styles for your container */
+  background-image: url('../dot.jpeg');
+  background-size: cover; /* Adjust to your preference */
+  background-position: center; /* Adjust to your preference */
+    /* Add more background properties as needed */
+  height: 100vh
 }
 
 .header {
@@ -82,6 +93,7 @@
   border-radius: 0 0 10px 10px;
   background-color: #f7f7f7;
   padding: 20px;
+  width: 100%
 }
 
 .info-icon {
