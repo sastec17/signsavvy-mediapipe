@@ -24,6 +24,7 @@ origin	https://github.com/sastec17/signsavvy-mediapipe.git (push)
 ## Install Dependencies
 * Run ```sudo npm install``` -  You may need to enter your computer's login password. This will setup initial dependencies for this project
   *  Note that this may require the use of the ```--force``` flag. We are still working out dependency issues :) 
+* Run ```npx tailwindcss build -o output.css``` to start tailwindcss build
 * Run ```npm start```
 
 ## Available Scripts - Additional information
