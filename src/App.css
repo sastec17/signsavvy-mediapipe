@@ -32,6 +32,12 @@ section {
   transition: opacity 500ms ease-in-out;
 }
 
+.videoView {
+  display: flex;
+  justify-content: center; 
+  margin-bottom: 10px;
+}
+
 .videoView p,
 .detectOnClick p {
   padding-top: 5px;

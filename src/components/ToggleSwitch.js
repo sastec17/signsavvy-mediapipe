@@ -7,7 +7,7 @@ const ToggleSwitch = ({ label, checked, setChecked }) => {
     };
 
     return (
-        <div className="container">
+        <div>
             {label}{" "}
             <ReactSwitch
                 checked={checked}

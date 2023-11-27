@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './styles.css';
-
-import Home from './home';
 import Settings from './settings';
 import Login from './login';
 import CreateAccount from './createaccount';
@@ -31,43 +29,53 @@ const AppRouter = () => {
 
   return (
     <StylingProvider>
-    <Router>
-      <nav>
-        <div className="navbar">
-          <h1 className="title">SignSavvy</h1>
-          {isLoggedIn && <Link to="/">Sign Of The Day</Link>}
-          {isLoggedIn && <Link to="/translation-page">Translation Page</Link>}
-          {isLoggedIn && <Link to="/settings">Settings</Link>}
-        </div>
-      </nav>
-      <Routes>
-        {isLoggedIn && <Route path="/" element={<SignOfTheDay />} />}
-        {!isLoggedIn && (
-          <Route
-            path="/"
-            element={<Login updateLoginStatus={updateLoginStatus} />}
-          />
-        )}
-        <Route path="/translation-page" element={<App />} />
-        <Route
-          path="/settings"
-          element={<Settings updateLoginStatus={updateLoginStatus} />}
-        />
-        <Route
-          path="/login"
-          element={<Login updateLoginStatus={updateLoginStatus} />}
-        />
-        <Route
-          path="/create-account"
-          element={<CreateAccount updateLoginStatus={updateLoginStatus} />}
-        />
-        <Route path="*" element={<Error />} />
-      </Routes>
-
-      {/* Links for Login and Create Account outside the navigation bar */}
-      {!isLoggedIn && <Link to="/login">Login</Link>}
-      {!isLoggedIn && <Link to="/create-account">Create Account</Link>}
-    </Router>
+      <div className='background'>
+        <Router>
+          <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
+            <h1 className="text-lg font-bold">SignSavvy</h1>
+            <div className="flex justify-center space-x-4">
+              {isLoggedIn && <Link to="/">Sign Of The Day</Link>}
+              {isLoggedIn && <Link to="/translation-page">Translation</Link>}
+              {isLoggedIn && <Link to="/settings">Settings</Link>}
+            </div>
+            {/* Nav buttons when logged in */}
+            {!isLoggedIn && (
+              <div className='flex space-x-4'>
+                <Link to="/login">Log In</Link>
+                <Link to='/create-account'>Create Account</Link>
+              </div>
+            )}
+            {isLoggedIn && (
+              <div className='flex space-x-4'>
+                <Link to="/login">Sign Out</Link>
+              </div>
+            )}
+          </header>
+          <Routes>
+            {isLoggedIn && <Route path="/" element={<SignOfTheDay />} />}
+            {!isLoggedIn && (
+              <Route
+                path="/"
+                element={<Login updateLoginStatus={updateLoginStatus} />}
+              />
+            )}
+            <Route path="/translation-page" element={<App />} />
+            <Route
+              path="/settings"
+              element={<Settings updateLoginStatus={updateLoginStatus} />}
+            />
+            <Route
+              path="/login"
+              element={<Login updateLoginStatus={updateLoginStatus} />}
+            />
+            <Route
+              path="/create-account"
+              element={<CreateAccount updateLoginStatus={updateLoginStatus} />}
+            />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </Router>
+      </div>
     </StylingProvider>
   );
 };

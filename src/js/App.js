@@ -112,6 +112,22 @@ function App() {
       const constraints = {
         video: true
       };
+      console.log('here2')
+
+      navigator.mediaDevices.enumerateDevices()
+        .then(devices => {
+          const cameras = devices.filter(device => device.kind === 'videoinput');
+          if (cameras.length === 0) {
+            console.error('No camera found.');
+          } else {
+            // Proceed with camera access
+            console.log('camera found')
+          }
+        })
+        .catch(error => {
+          console.error('Error enumerating devices:', error);
+        });
+
       // Activate the webcam stream
       navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
         if (videoRef.current) {
@@ -207,30 +223,36 @@ function App() {
   };
   
   return (
-    <div className="App">
-      <h1>Translation Page</h1>
-      <p>Real-Time Translation</p>
+    <>
+    <header className="bg-white shadow flex items-center">
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <h1 className="text-3xl font-bold tracking-tight text-gray-900">Real-Time Translation</h1>
+    </div>
+    </header>
+    <div className="text-center flex flex-col justify-center">
       <p>Enable WebCam and begin signing</p>
 
      <ToggleSwitch label={'Text to Speech'} checked={shouldSpeechRef.current} setChecked={handleCheckboxChange}></ToggleSwitch>
-     <RecordScreen></RecordScreen>
-      <header className="App-header">
-        <section id="demos" className="invisible">
+   
+      <header className="min-h-screen flex flex-row justify-center text-base sm:text-md ">
+        <section id="demos">
           <div id="liveView" className="videoView">
-            <button id="webcamButton" className="mdc-button mdc-button-raised"
-            onClick={enableCam}>
-              <span className="mdc-button-label">Click to Enable Webcam</span>
-            </button>
+          <RecordScreen></RecordScreen>
+          <button id="webCamButton" onClick={enableCam}
+                  className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full">
+            <span>Enable Camera</span>
+          </button>
           </div>
           <div style={{position: 'relative'}}> 
             <video ref={videoRef} id="webcam" autoPlay playsInline></video>
             <canvas className='output_canvas' id='output_canvas' ref={canvasRef} 
                     style={{width: '1280', height: '720', position: 'absolute', left: '0px', top: '0px'}}></canvas>
-            <p style={translationTextStyle} id='gesture_output' className="output"></p>
+            <p style={translationTextStyle} id='gesture_output' className="hidden sm:block w-full text-base sm:text-[calc(8px+1.2vw)]"></p>
           </div>
         </section>
       </header>
     </div>
+    </>
   );
 }
 
