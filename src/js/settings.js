@@ -76,6 +76,13 @@ const Settings = ({ updateLoginStatus }) => {
     navigate("/login");
     Cookies.remove("login", { path: "" });
   };
+  
+  const handleKeyDown = (e, tabName) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent the default Enter key behavior
+      setSelectedTab(tabName);
+    }
+  };
 
   return (
     <>
@@ -89,12 +96,16 @@ const Settings = ({ updateLoginStatus }) => {
         <li
           className={selectedTab === "your-account" ? "active" : ""}
           onClick={() => setSelectedTab("your-account")}
+          onKeyDown={(e) => handleKeyDown(e, "your-account")}
+          tabIndex={0}
         >
           Your Account
         </li>
         <li
           className={selectedTab === "subtitle-styles" ? "active" : ""}
           onClick={() => setSelectedTab("subtitle-styles")}
+          onKeyDown={(e) => handleKeyDown(e, "subtitle-styles")}
+          tabIndex={0}
         >
           User Preferences
         </li>
