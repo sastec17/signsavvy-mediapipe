@@ -64,11 +64,13 @@ function App() {
   // vars that rely on application to render first
   const videoRef=useRef(null);
   const canvasRef=useRef(null); 
-  const [speech, setSpeech] = useState(false) 
   const [shouldSpeech, setShouldSpeech] = useState(false);
   const shouldSpeechRef = useRef(shouldSpeech); // Create a ref to keep track of shouldSpeech
+
+  const [camRunning, setCamRunning] = useState(false);
+  const camRunningRef = useRef(camRunning); // Create a ref to keep track of camRunning
+
   // text to speech variables
-  const [value, setValue] = useState('');
   const { speak } = useSpeechSynthesis();
   
   // variables for user preferences to alter translation text
@@ -104,9 +106,11 @@ function App() {
       }
       if (webcamRunning === true) {
         webcamRunning = false;
+        handleWebCamChange()
         // TODO - CHANGE TEXT WITHIN AN ELEMENT
       } else {
         webcamRunning = true;
+        handleWebCamChange();
       }
         // getUsermedia parameters.
       const constraints = {
@@ -173,12 +177,12 @@ function App() {
           landmarks,
           GestureRecognizer.HAND_CONNECTIONS,
           {
-            color: "#00FF00",
+            color: "#FFFFFF",
             lineWidth: 5
           }
         );
         drawingUtils.drawLandmarks(landmarks, {
-          color: "#FF0000",
+          color: "0000FF",
           lineWidth: 2
         });
       }
@@ -200,12 +204,12 @@ function App() {
       }
       else { handedness = 'Right'}
       gestureOutput.innerText = 
-      `GestureRecognizer: ${categoryName}\n Confidence: ${categoryScore} %\n Handedness: ${handedness}`;
+      `Sign Recognized: ${categoryName}\n Confidence: ${categoryScore} %\n Handedness: ${handedness}`;
     } else {
       gestureOutput.style.display = "none";
     }
     console.log("shouldSpeechRef", shouldSpeechRef.current)
-    if (val !== categoryName && shouldSpeechRef.current  == true && categoryScore > 70) {
+    if (val !== categoryName && shouldSpeechRef.current  == true && categoryScore > 85) {
       speak({text: categoryName})
       val = categoryName
     }
@@ -213,6 +217,13 @@ function App() {
     if (webcamRunning === true) {
       window.requestAnimationFrame(predictWebcam);
     }
+  }
+
+  const handleWebCamChange = () => {
+    setCamRunning(prevCamRunning => {
+      camRunningRef.current = !prevCamRunning; // Update the ref directly
+      return !prevCamRunning;
+    })
   }
 
   const handleCheckboxChange = () => {
@@ -240,7 +251,7 @@ function App() {
           <RecordScreen></RecordScreen>
           <button id="webCamButton" onClick={enableCam}
                   className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full">
-            <span>Enable Camera</span>
+            <span>{!camRunningRef.current ? <>Enable Camera</> : <>Disable Predictions</>}</span>
           </button>
           </div>
           <div style={{position: 'relative'}}> 
