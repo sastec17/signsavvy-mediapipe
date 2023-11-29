@@ -19,7 +19,7 @@ const Settings = ({ updateLoginStatus }) => {
     fontBackgroundColor,
     setFontBackgroundColor,
   } = useStyling();
-
+  
   useEffect(() => {
     retrieveData();
   }, []);
@@ -148,6 +148,13 @@ const Settings = ({ updateLoginStatus }) => {
         )}
         {selectedTab === "subtitle-styles" && (
           <div>
+
+            {/* Sample Translation Text Section */}
+            <div className="sample-translation" style={{ fontSize, color: fontColor, backgroundColor: fontBackgroundColor }}>
+              <h3>Sample Translation Text</h3>
+            </div>
+
+            {/* Font Size Selector */}
             <label className="tooltip">
               Font Size
               <img
@@ -171,6 +178,8 @@ const Settings = ({ updateLoginStatus }) => {
               <option value="36px">36px</option>
               <option value="48px">48px</option>
             </select>
+            
+            {/* Font Color Selector */}
             <label className="tooltip">
               Translation Font Color
               <img
@@ -188,6 +197,8 @@ const Settings = ({ updateLoginStatus }) => {
               value={fontColor}
               onChange={(e) => setFontColor(e.target.value)}
             />
+            
+            {/* Font Background Color Selector */}
             <label className="tooltip">
               Translation Font Background Color
               <img
