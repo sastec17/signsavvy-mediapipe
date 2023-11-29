@@ -13,7 +13,6 @@ const Login = (props) => {
   const navigate = useNavigate();
 
   const onButtonClick = () => {
-
     if (username == "") {
       alert("Enter a username");
     } else if (password === "") {
@@ -62,6 +61,7 @@ const Login = (props) => {
       <div className={"inputContainer"}>
         <input
           value={password}
+          type="password"
           placeholder="Enter your password here"
           onChange={(ev) => setPassword(ev.target.value)}
           className={"inputBox"}
