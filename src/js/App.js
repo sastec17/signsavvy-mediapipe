@@ -17,7 +17,6 @@
 import '../App.css';
 import './AppRouter';
 import React, {useEffect, useRef, useState} from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import {
   GestureRecognizer,
@@ -37,7 +36,6 @@ const demosSection = document.getElementById("demos");
 const videoHeight = "360px";
 const videoWidth = "480px";
 var val = '';
-let speech_bool = false;
 
 // TODO - Replace modelAssetPath with local path to pre-trained set - Do we need to include additional data to this?
 const createGestureRecognizer = async () => {
@@ -64,11 +62,12 @@ function App() {
   // vars that rely on application to render first
   const videoRef=useRef(null);
   const canvasRef=useRef(null); 
-  const [speech, setSpeech] = useState(false) 
   const [shouldSpeech, setShouldSpeech] = useState(false);
   const shouldSpeechRef = useRef(shouldSpeech); // Create a ref to keep track of shouldSpeech
+
+  const [camRunning, setcamRunning] = useState(false);
+  const camRunningRef = useRef(camRunning);
   // text to speech variables
-  const [value, setValue] = useState('');
   const { speak } = useSpeechSynthesis();
   
   // variables for user preferences to alter translation text
@@ -83,17 +82,28 @@ function App() {
   // TODO: Make this functional with useState() - lagged for some
   useEffect(() => {
     if (usedBefore) { enableCam() }
+    if (videoRef.current) {
+      videoRef.current.addEventListener("loadeddata", predictWebcam);
+    }
     return () => {
-      console.log('here')
-      if (webcamRunning == true) {
+      if (webcamRunning === true) {
         webcamRunning = false;
         usedBefore=true;
+      }
+      if (videoRef.current) {
+        videoRef.current.removeEventListener("loadeddata", predictWebcam);
       }
     }
   }, [])
   // Check if webcam access is supported.
   function hasGetUserMedia() {
     return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+  }
+  function toggleEnableButton() {
+    setcamRunning(prevcamRunning => {
+      camRunningRef.current = !prevcamRunning; // Update the ref directly
+      return !prevcamRunning;
+    });
   }
   // openWebCam
   function enableCam(event) {
@@ -102,17 +112,17 @@ function App() {
         alert("Please wait for gestureRecognizer to load");
         return
       }
+      speak({text: 'hello'})
+      toggleEnableButton()
       if (webcamRunning === true) {
         webcamRunning = false;
-        // TODO - CHANGE TEXT WITHIN AN ELEMENT
       } else {
         webcamRunning = true;
       }
-        // getUsermedia parameters.
+      // getUsermedia parameters.
       const constraints = {
         video: true
       };
-      console.log('here2')
 
       navigator.mediaDevices.enumerateDevices()
         .then(devices => {
@@ -132,15 +142,13 @@ function App() {
       navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
-
-          videoRef.current.addEventListener("loadeddata", predictWebcam);
+          //videoRef.current.addEventListener("loadeddata", predictWebcam);
         }        
       })
     } else {
       console.warn("getUserMedia() is not supported by your browser")
     }
   }
-  console.log('Render - shouldSpeech:', shouldSpeech);
 
   let lastVideoTime = -1;
   let results = undefined;
@@ -195,7 +203,7 @@ function App() {
         results.gestures[0][0].score * 100
       ).toFixed(2);
       let handedness = results.handednesses[0][0].displayName;
-      if (handedness == 'Right') {
+      if (handedness === 'Right') {
         handedness = 'Left';
       }
       else { handedness = 'Right'}
@@ -204,12 +212,14 @@ function App() {
     } else {
       gestureOutput.style.display = "none";
     }
-    console.log("shouldSpeechRef", shouldSpeechRef.current)
-    if (val !== categoryName && shouldSpeechRef.current  == true && categoryScore > 70) {
-      speak({text: categoryName})
+    if (val !== categoryName && shouldSpeechRef.current == true && categoryScore > 70) {
+      console.log('speaking =', categoryName)
+      await speak({text: categoryName})
       val = categoryName
+      setTimeout(() => {
+        // Continue with the loop or additional logic
+      }, 1000);
     }
-
     if (webcamRunning === true) {
       window.requestAnimationFrame(predictWebcam);
     }
@@ -240,7 +250,7 @@ function App() {
           <RecordScreen></RecordScreen>
           <button id="webCamButton" onClick={enableCam}
                   className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full">
-            <span>Enable Camera</span>
+            <span> {camRunningRef.current === false ? <>Enable Camera</> : <>Disable Predictions</>}</span>
           </button>
           </div>
           <div style={{position: 'relative'}}> 
