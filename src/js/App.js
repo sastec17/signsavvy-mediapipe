@@ -14,47 +14,47 @@
 
 // Code reformatted by EECS 495 SignSavvy team. Based on Mediapipe's code
 
-import '../App.css';
-import './AppRouter';
-import React, {useEffect, useRef, useState} from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { useSpeechSynthesis } from 'react-speech-kit';
+import "../App.css";
+import "./AppRouter";
+import React, { useEffect, useRef, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { useSpeechSynthesis } from "react-speech-kit";
 import {
   GestureRecognizer,
   FilesetResolver,
-  DrawingUtils
+  DrawingUtils,
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
-import RecordScreen from '../components/ScreenRecord';
-import ToggleSwitch from '../components/ToggleSwitch';
+import RecordScreen from "../components/ScreenRecord";
+import ToggleSwitch from "../components/ToggleSwitch";
 //import StylingContext, { StylingProvider } from './StylingContext';
-import {useStyling} from './StylingContext';
+import { useStyling } from "./StylingContext";
 
 let gestureRecognizer = GestureRecognizer;
 let webcamRunning = false;
 let runningMode = "IMAGE";
-let usedBefore=false;
+let usedBefore = false;
 const demosSection = document.getElementById("demos");
 const videoHeight = "360px";
 const videoWidth = "480px";
-var val = '';
+var val = "";
 let speech_bool = false;
+let screenRecordd = false;
 
 // TODO - Replace modelAssetPath with local path to pre-trained set - Do we need to include additional data to this?
 const createGestureRecognizer = async () => {
   const vision = await FilesetResolver.forVisionTasks(
     "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm"
   );
-    gestureRecognizer = await GestureRecognizer.createFromOptions(vision, {
+  gestureRecognizer = await GestureRecognizer.createFromOptions(vision, {
     baseOptions: {
       modelAssetPath:
         "https://storage.googleapis.com/mediapipe_495/alphabet_asl.task",
-      delegate: "GPU"
+      delegate: "GPU",
     },
-    runningMode: runningMode
-  })
+    runningMode: runningMode,
+  });
   if (demosSection) {
     demosSection.classList.remove("invisible");
-
   }
 };
 
@@ -62,15 +62,15 @@ createGestureRecognizer();
 
 function App() {
   // vars that rely on application to render first
-  const videoRef=useRef(null);
-  const canvasRef=useRef(null); 
-  const [speech, setSpeech] = useState(false) 
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const [speech, setSpeech] = useState(false);
   const [shouldSpeech, setShouldSpeech] = useState(false);
   const shouldSpeechRef = useRef(shouldSpeech); // Create a ref to keep track of shouldSpeech
   // text to speech variables
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const { speak } = useSpeechSynthesis();
-  
+
   // variables for user preferences to alter translation text
   const { fontSize, fontColor, fontBackgroundColor } = useStyling();
   const translationTextStyle = {
@@ -78,29 +78,31 @@ function App() {
     color: fontColor || "black", // Use a default value if fontColor is not set
     backgroundColor: fontBackgroundColor || "white", // Use a default value if fontBackgroundColor is not set
   };
-  
-  
+
   // TODO: Make this functional with useState() - lagged for some
   useEffect(() => {
-    if (usedBefore) { enableCam() }
+    if (usedBefore) {
+      enableCam();
+    }
     return () => {
-      console.log('here')
+      console.log("here");
       if (webcamRunning == true) {
         webcamRunning = false;
-        usedBefore=true;
+        usedBefore = true;
       }
-    }
-  }, [])
+    };
+  }, []);
   // Check if webcam access is supported.
   function hasGetUserMedia() {
     return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
   }
   // openWebCam
   function enableCam(event) {
+    screenRecordd = true;
     if (hasGetUserMedia()) {
       if (!gestureRecognizer) {
         alert("Please wait for gestureRecognizer to load");
-        return
+        return;
       }
       if (webcamRunning === true) {
         webcamRunning = false;
@@ -108,24 +110,27 @@ function App() {
       } else {
         webcamRunning = true;
       }
-        // getUsermedia parameters.
+      // getUsermedia parameters.
       const constraints = {
-        video: true
+        video: true,
       };
-      console.log('here2')
+      console.log("here2");
 
-      navigator.mediaDevices.enumerateDevices()
-        .then(devices => {
-          const cameras = devices.filter(device => device.kind === 'videoinput');
+      navigator.mediaDevices
+        .enumerateDevices()
+        .then((devices) => {
+          const cameras = devices.filter(
+            (device) => device.kind === "videoinput"
+          );
           if (cameras.length === 0) {
-            console.error('No camera found.');
+            console.error("No camera found.");
           } else {
             // Proceed with camera access
-            console.log('camera found')
+            console.log("camera found");
           }
         })
-        .catch(error => {
-          console.error('Error enumerating devices:', error);
+        .catch((error) => {
+          console.error("Error enumerating devices:", error);
         });
 
       // Activate the webcam stream
@@ -134,13 +139,13 @@ function App() {
           videoRef.current.srcObject = stream;
 
           videoRef.current.addEventListener("loadeddata", predictWebcam);
-        }        
-      })
+        }
+      });
     } else {
-      console.warn("getUserMedia() is not supported by your browser")
+      console.warn("getUserMedia() is not supported by your browser");
     }
   }
-  console.log('Render - shouldSpeech:', shouldSpeech);
+  console.log("Render - shouldSpeech:", shouldSpeech);
 
   let lastVideoTime = -1;
   let results = undefined;
@@ -149,10 +154,12 @@ function App() {
     const webcamElement = document.getElementById("webcam");
     if (runningMode === "IMAGE") {
       runningMode = "VIDEO";
-      await gestureRecognizer.setOptions({ runningMode: "VIDEO"});
+      await gestureRecognizer.setOptions({ runningMode: "VIDEO" });
     }
     let nowInMs = Date.now();
-    if (videoRef.current === null) {return;}
+    if (videoRef.current === null) {
+      return;
+    }
     if (videoRef.current && videoRef.current.currentTime !== lastVideoTime) {
       lastVideoTime = videoRef.current.currentTime;
       results = gestureRecognizer.recognizeForVideo(videoRef.current, nowInMs);
@@ -174,40 +181,42 @@ function App() {
           GestureRecognizer.HAND_CONNECTIONS,
           {
             color: "#00FF00",
-            lineWidth: 5
+            lineWidth: 5,
           }
         );
         drawingUtils.drawLandmarks(landmarks, {
           color: "#FF0000",
-          lineWidth: 2
+          lineWidth: 2,
         });
       }
     }
     canvasCtx.restore();
-    var categoryName = '';
+    var categoryName = "";
     var categoryScore = 0;
     const gestureOutput = document.getElementById("gesture_output");
     if (results.gestures.length > 0) {
       gestureOutput.style.display = "block";
       gestureOutput.style.width = videoWidth;
       categoryName = results.gestures[0][0].categoryName;
-      categoryScore = parseFloat(
-        results.gestures[0][0].score * 100
-      ).toFixed(2);
+      categoryScore = parseFloat(results.gestures[0][0].score * 100).toFixed(2);
       let handedness = results.handednesses[0][0].displayName;
-      if (handedness == 'Right') {
-        handedness = 'Left';
+      if (handedness == "Right") {
+        handedness = "Left";
+      } else {
+        handedness = "Right";
       }
-      else { handedness = 'Right'}
-      gestureOutput.innerText = 
-      `GestureRecognizer: ${categoryName}\n Confidence: ${categoryScore} %\n Handedness: ${handedness}`;
+      gestureOutput.innerText = `GestureRecognizer: ${categoryName}\n Confidence: ${categoryScore} %\n Handedness: ${handedness}`;
     } else {
       gestureOutput.style.display = "none";
     }
-    console.log("shouldSpeechRef", shouldSpeechRef.current)
-    if (val !== categoryName && shouldSpeechRef.current  == true && categoryScore > 70) {
-      speak({text: categoryName})
-      val = categoryName
+    console.log("shouldSpeechRef", shouldSpeechRef.current);
+    if (
+      val !== categoryName &&
+      shouldSpeechRef.current == true &&
+      categoryScore > 70
+    ) {
+      speak({ text: categoryName });
+      val = categoryName;
     }
 
     if (webcamRunning === true) {
@@ -216,42 +225,65 @@ function App() {
   }
 
   const handleCheckboxChange = () => {
-    setShouldSpeech(prevShouldSpeech => {
+    setShouldSpeech((prevShouldSpeech) => {
       shouldSpeechRef.current = !prevShouldSpeech; // Update the ref directly
       return !prevShouldSpeech;
     });
   };
-  
+
   return (
     <>
-    <header className="bg-white shadow flex items-center">
-    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold tracking-tight text-gray-900">Real-Time Translation</h1>
-    </div>
-    </header>
-    <div className="text-center flex flex-col justify-center">
-      <p>Enable WebCam and begin signing</p>
-
-     <ToggleSwitch label={'Text to Speech'} checked={shouldSpeechRef.current} setChecked={handleCheckboxChange}></ToggleSwitch>
-   
-      <header className="min-h-screen flex flex-row justify-center text-base sm:text-md ">
-        <section id="demos">
-          <div id="liveView" className="videoView">
-          <RecordScreen></RecordScreen>
-          <button id="webCamButton" onClick={enableCam}
-                  className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full">
-            <span>Enable Camera</span>
-          </button>
-          </div>
-          <div style={{position: 'relative'}}> 
-            <video ref={videoRef} id="webcam" autoPlay playsInline></video>
-            <canvas className='output_canvas' id='output_canvas' ref={canvasRef} 
-                    style={{width: '1280', height: '720', position: 'absolute', left: '0px', top: '0px'}}></canvas>
-            <p style={translationTextStyle} id='gesture_output' className="hidden sm:block w-full text-base sm:text-[calc(8px+1.2vw)]"></p>
-          </div>
-        </section>
+      <header className="bg-white shadow flex items-center">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+            Real-Time Translation
+          </h1>
+        </div>
       </header>
-    </div>
+      <div className="text-center flex flex-col justify-center">
+        <p>Enable WebCam and begin signing</p>
+
+        <ToggleSwitch
+          label={"Text to Speech"}
+          checked={shouldSpeechRef.current}
+          setChecked={handleCheckboxChange}
+        ></ToggleSwitch>
+
+        <header className="min-h-screen flex flex-row justify-center text-base sm:text-md ">
+          <section id="demos">
+            <div id="liveView" className="videoView">
+              <RecordScreen></RecordScreen>
+              <button
+                id="webCamButton"
+                onClick={enableCam}
+                className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full"
+              >
+                <span>Enable Camera</span>
+              </button>
+            </div>
+            <div style={{ position: "relative" }}>
+              <video ref={videoRef} id="webcam" autoPlay playsInline></video>
+              <canvas
+                className="output_canvas"
+                id="output_canvas"
+                ref={canvasRef}
+                style={{
+                  width: "1280",
+                  height: "720",
+                  position: "absolute",
+                  left: "0px",
+                  top: "0px",
+                }}
+              ></canvas>
+              <p
+                style={translationTextStyle}
+                id="gesture_output"
+                className="hidden sm:block w-full text-base sm:text-[calc(8px+1.2vw)]"
+              ></p>
+            </div>
+          </section>
+        </header>
+      </div>
     </>
   );
 }
