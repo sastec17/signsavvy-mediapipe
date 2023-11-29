@@ -214,3 +214,10 @@ nav a:hover {
     /* Adjust the margin as needed */
   }
 }
+
+/* Sample Translation Text on Settings Page Styling */
+.sample-translation {
+  text-align: center;
+  margin-bottom: 20px; /* Adjust as needed */
+  
+}
