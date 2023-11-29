@@ -39,7 +39,7 @@ function SignOfTheDay() {
     </div>
     </header>
     <div className="flex flex-col items-center p-10 border-black rounded-10 max-w-500 mx-auto">
-      <div>Welcome {temp}</div>
+      <div>Welcome {temp}!</div>
       <p style={{ fontSize: "24px", margin: "0" }}>COST AN ARM AND A LEG</p>
       <div className="video-container">
         <video id="signVideo" controls style={{ transform: "scaleX(1)" }}>

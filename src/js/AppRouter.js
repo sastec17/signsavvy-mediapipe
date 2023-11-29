@@ -34,7 +34,7 @@ const AppRouter = () => {
           <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
             <h1 className="text-lg font-bold">SignSavvy</h1>
             <div className="flex justify-center space-x-4">
-              {isLoggedIn && <Link to="/">Sign Of The Day</Link>}
+              {isLoggedIn && <Link to="/">Sign of the Day</Link>}
               {isLoggedIn && <Link to="/translation-page">Translation</Link>}
               {isLoggedIn && <Link to="/settings">Settings</Link>}
             </div>

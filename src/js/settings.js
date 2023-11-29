@@ -113,7 +113,6 @@ const Settings = ({ updateLoginStatus }) => {
       <div className="tab-content">
         {selectedTab === "your-account" && (
           <div>
-            <h2>Your Account</h2>
             <label>Username</label>
             <input
               className="input"
@@ -149,7 +148,6 @@ const Settings = ({ updateLoginStatus }) => {
         )}
         {selectedTab === "subtitle-styles" && (
           <div>
-            <h2>User Preferences</h2>
             <label className="tooltip">
               Font Size
               <img
