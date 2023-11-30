@@ -62,8 +62,8 @@ createGestureRecognizer();
 
 function App() {
   // vars that rely on application to render first
-  const videoRef=useRef(null);
-  const canvasRef=useRef(null); 
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
 
   const [shouldSpeech, setShouldSpeech] = useState(false);
   const shouldSpeechRef = useRef(shouldSpeech); // Create a ref to keep track of shouldSpeech
@@ -108,7 +108,7 @@ function App() {
       }
       if (webcamRunning === true) {
         webcamRunning = false;
-        handleWebCamChange()
+        handleWebCamChange();
         // TODO - CHANGE TEXT WITHIN AN ELEMENT
       } else {
         webcamRunning = true;
@@ -185,12 +185,12 @@ function App() {
           GestureRecognizer.HAND_CONNECTIONS,
           {
             color: "#FFFFFF",
-            lineWidth: 3
+            lineWidth: 3,
           }
         );
         drawingUtils.drawLandmarks(landmarks, {
           color: "0000FF",
-          lineWidth: 2
+          lineWidth: 2,
         });
       }
     }
@@ -209,15 +209,18 @@ function App() {
       } else {
         handedness = "Right";
       }
-      gestureOutput.innerText = 
-      `Sign Recognized: ${categoryName}\n Confidence: ${categoryScore} %\n Handedness: ${handedness}`;
+      gestureOutput.innerText = `Sign Recognized: ${categoryName}\n Confidence: ${categoryScore} %\n Handedness: ${handedness}`;
     } else {
       gestureOutput.style.display = "none";
     }
-    console.log("shouldSpeechRef", shouldSpeechRef.current)
-    if (val !== categoryName && shouldSpeechRef.current  == true && categoryScore > 85) {
-      speak({text: categoryName})
-      val = categoryName
+    console.log("shouldSpeechRef", shouldSpeechRef.current);
+    if (
+      val !== categoryName &&
+      shouldSpeechRef.current == true &&
+      categoryScore > 85
+    ) {
+      speak({ text: categoryName });
+      val = categoryName;
     }
 
     if (webcamRunning === true) {
@@ -226,11 +229,11 @@ function App() {
   }
 
   const handleWebCamChange = () => {
-    setCamRunning(prevCamRunning => {
+    setCamRunning((prevCamRunning) => {
       camRunningRef.current = !prevCamRunning; // Update the ref directly
       return !prevCamRunning;
-    })
-  }
+    });
+  };
 
   const handleCheckboxChange = () => {
     setShouldSpeech((prevShouldSpeech) => {
@@ -241,34 +244,63 @@ function App() {
 
   return (
     <>
-    <header className="bg-white shadow flex items-center">
-    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold tracking-tight text-gray-900">Real-Time Translation</h1>
-    </div>
-    </header>
-    <div className="text-center flex flex-col justify-center">
-      <p>Enable WebCam and begin signing</p>
-
-     <ToggleSwitch label={'Text to Speech'} checked={shouldSpeechRef.current} setChecked={handleCheckboxChange}></ToggleSwitch>
-   
-      <header className="min-h-screen flex flex-row justify-center text-base sm:text-md ">
-        <section id="demos">
-          <div id="liveView" className="videoView">
-          <RecordScreen></RecordScreen>
-          <button id="webCamButton" onClick={enableCam}
-                  className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full">
-            <span>{!camRunningRef.current ? <>Enable Camera</> : <>Disable Predictions</>}</span>
-          </button>
-          </div>
-          <div style={{position: 'relative'}}> 
-            <video ref={videoRef} id="webcam" autoPlay playsInline></video>
-            <canvas className='output_canvas' id='output_canvas' ref={canvasRef} 
-                    style={{width: '1280', height: '720', position: 'absolute', left: '0px', top: '0px'}}></canvas>
-            <p style={translationTextStyle} id='gesture_output' className="hidden sm:block w-full text-base sm:text-[calc(8px+1.2vw)]"></p>
-          </div>
-        </section>
+      <header className="bg-white shadow flex items-center">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+            Real-Time Translation
+          </h1>
+        </div>
       </header>
-    </div>
+      <div className="text-center flex flex-col justify-center">
+        <p>Enable WebCam and begin signing</p>
+
+        <ToggleSwitch
+          label={"Text to Speech"}
+          checked={shouldSpeechRef.current}
+          setChecked={handleCheckboxChange}
+        ></ToggleSwitch>
+
+        <header className="min-h-screen flex flex-row justify-center text-base sm:text-md ">
+          <section id="demos">
+            <div id="liveView" className="videoView">
+              {camRunningRef.current && <RecordScreen></RecordScreen>}
+              <button
+                id="webCamButton"
+                onClick={enableCam}
+                className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full"
+              >
+                <span>
+                  {!camRunningRef.current ? (
+                    <>Enable Camera</>
+                  ) : (
+                    <>Disable Predictions</>
+                  )}
+                </span>
+              </button>
+            </div>
+            <div style={{ position: "relative" }}>
+              <video ref={videoRef} id="webcam" autoPlay playsInline></video>
+              <canvas
+                className="output_canvas"
+                id="output_canvas"
+                ref={canvasRef}
+                style={{
+                  width: "1280",
+                  height: "720",
+                  position: "absolute",
+                  left: "0px",
+                  top: "0px",
+                }}
+              ></canvas>
+              <p
+                style={translationTextStyle}
+                id="gesture_output"
+                className="hidden sm:block w-full text-base sm:text-[calc(8px+1.2vw)]"
+              ></p>
+            </div>
+          </section>
+        </header>
+      </div>
     </>
   );
 }
