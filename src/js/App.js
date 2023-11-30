@@ -209,7 +209,6 @@ function App() {
       } else {
         handedness = "Right";
       }
-      else { handedness = 'Right'}
       gestureOutput.innerText = 
       `Sign Recognized: ${categoryName}\n Confidence: ${categoryScore} %\n Handedness: ${handedness}`;
     } else {
