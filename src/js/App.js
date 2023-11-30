@@ -38,7 +38,6 @@ const videoHeight = "360px";
 const videoWidth = "480px";
 var val = "";
 let speech_bool = false;
-let screenRecordd = false;
 
 // TODO - Replace modelAssetPath with local path to pre-trained set - Do we need to include additional data to this?
 const createGestureRecognizer = async () => {
@@ -100,7 +99,6 @@ function App() {
   }
   // openWebCam
   function enableCam(event) {
-    screenRecordd = true;
     if (hasGetUserMedia()) {
       if (!gestureRecognizer) {
         alert("Please wait for gestureRecognizer to load");
