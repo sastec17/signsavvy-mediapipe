@@ -32,11 +32,26 @@ const AppRouter = () => {
       <div className='background'>
         <Router>
           <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
-            <h1 className="text-lg font-bold">SignSavvy</h1>
+            <span style={{ display: 'flex', alignItems: 'center' }}>
+              <h1 className="text-lg font-bold">SignSavvy</h1>
+              <img
+                src="SignSavvy.png"
+                alt="SignSavvyLogo"
+                className="ml-2"
+                style={{ width: '30px', height: '30px' }}
+              />
+            </span>
             <div className="flex justify-center space-x-4">
               {isLoggedIn && <Link to="/">Sign of the Day</Link>}
               {isLoggedIn && <Link to="/translation-page">Translation</Link>}
-              {isLoggedIn && <Link to="/settings">Settings</Link>}
+              {isLoggedIn && 
+                <Link
+                  to="/settings"
+                  className="nav-link"
+                  style={{ paddingRight: '65px' }} // Padding to fix centering after adding signsavvy icon
+                >
+                  Settings
+                </Link>}
             </div>
             {/* Nav buttons when logged in */}
             {!isLoggedIn && (
