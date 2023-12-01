@@ -2,14 +2,21 @@ import React, { useState, useEffect } from "react";
 import "./styles.css";
 import Cookies from "js-cookie";
 
+
 function SignOfTheDay() {
   const [signName, setSignName] = useState("");
   const [isPlaying, setIsPlaying] = useState(false);
   const [temp, setTemp] = useState("");
+  const filesContext = require.context('/public/signOfTheDay', false, /\.(|mov|mp4)$/);
+  const fileNames = filesContext.keys().map(key => key.split('/').pop());
+  // simulate rotation 
+  const date = new Date()
+  const current_day = date.getDay()
 
+  const video_to_load = current_day % fileNames.length
   // The video source should point to the local video file
-  const videoSrc = "/signOfTheDay/23315.mp4";
-
+  const videoSrc = `/signOfTheDay/` + fileNames[video_to_load];
+  const sign_name = fileNames[video_to_load].slice(0, -4)
   const togglePlay = () => {
     const videoElement = document.getElementById("signVideo");
 
@@ -40,7 +47,7 @@ function SignOfTheDay() {
     </header>
     <div className="flex flex-col items-center p-10 border-black rounded-10 max-w-500 mx-auto">
       <div>Welcome {temp}!</div>
-      <p style={{ fontSize: "24px", margin: "0" }}>COST AN ARM AND A LEG</p>
+      <p style={{ fontSize: "24px", margin: "0" }}>{sign_name}</p>
       <div className="video-container">
         <video id="signVideo" controls style={{ transform: "scaleX(1)" }}>
           <source src={videoSrc} type="video/mp4" />
