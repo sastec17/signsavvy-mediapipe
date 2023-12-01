@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "flowbite": "^2.1.1",
     "js-cookie": "^3.0.5",
+    "list-react-files": "^0.2.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
