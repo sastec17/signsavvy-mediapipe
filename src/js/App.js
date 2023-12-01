@@ -47,7 +47,7 @@ const createGestureRecognizer = async () => {
   gestureRecognizer = await GestureRecognizer.createFromOptions(vision, {
     baseOptions: {
       modelAssetPath:
-        "https://storage.googleapis.com/mediapipe_495/alphabet_asl.task",
+        "https://storage.googleapis.com/mediapipe_495/improved_asl.task",
       delegate: "GPU",
     },
     runningMode: runningMode,
