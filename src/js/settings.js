@@ -19,7 +19,7 @@ const Settings = ({ updateLoginStatus }) => {
     fontBackgroundColor,
     setFontBackgroundColor,
   } = useStyling();
-  
+
   useEffect(() => {
     retrieveData();
   }, []);
@@ -76,7 +76,7 @@ const Settings = ({ updateLoginStatus }) => {
     navigate("/login");
     Cookies.remove("login", { path: "" });
   };
-  
+
   const handleKeyDown = (e, tabName) => {
     if (e.key === "Enter") {
       e.preventDefault(); // Prevent the default Enter key behavior
@@ -86,146 +86,154 @@ const Settings = ({ updateLoginStatus }) => {
 
   return (
     <>
-    <header className="bg-white shadow flex items-center">
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Settings</h1>
-      </div>
-    </header>
-    <div className="container">
-      <ul className="tab-menu">
-        <li
-          className={selectedTab === "your-account" ? "active" : ""}
-          onClick={() => setSelectedTab("your-account")}
-          onKeyDown={(e) => handleKeyDown(e, "your-account")}
-          tabIndex={0}
-        >
-          Your Account
-        </li>
-        <li
-          className={selectedTab === "subtitle-styles" ? "active" : ""}
-          onClick={() => setSelectedTab("subtitle-styles")}
-          onKeyDown={(e) => handleKeyDown(e, "subtitle-styles")}
-          tabIndex={0}
-        >
-          User Preferences
-        </li>
-      </ul>
-      <div className="tab-content">
-        {selectedTab === "your-account" && (
-          <div>
-            <label>Username</label>
-            <input
-              className="input"
-              type="text"
-              value={name}
-              placeholder={name}
-              readOnly
-              disabled
-            />
-            <label>New Password</label>
-            <input
-              className="input"
-              type="password"
-              onChange={(e) => setNewPassword(e.target.value)}
-              value={newPassword}
-              placeholder="New Password"
-            />
-            <label>Confirm Password</label>
-            <input
-              className="input"
-              type="password"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              value={confirmPassword}
-              placeholder="Confirm Password"
-            />
-            <button onClick={onPressSave} className="saveButton">
-              SAVE CHANGES
-            </button>
-            <button onClick={logout} className="logoutButton">
-              LOGOUT
-            </button>
-          </div>
-        )}
-        {selectedTab === "subtitle-styles" && (
-          <div>
-
-            {/* Sample Translation Text Section */}
-            <div className="sample-translation" style={{ fontSize, color: fontColor, backgroundColor: fontBackgroundColor }}>
-              <h3>Sample Translation Text</h3>
+      <header className="bg-white shadow flex items-center">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+            Settings
+          </h1>
+        </div>
+      </header>
+      <div className="container">
+        <ul className="tab-menu">
+          <li
+            className={selectedTab === "your-account" ? "active" : ""}
+            onClick={() => setSelectedTab("your-account")}
+            onKeyDown={(e) => handleKeyDown(e, "your-account")}
+            tabIndex={0}
+          >
+            Your Account
+          </li>
+          <li
+            className={selectedTab === "subtitle-styles" ? "active" : ""}
+            onClick={() => setSelectedTab("subtitle-styles")}
+            onKeyDown={(e) => handleKeyDown(e, "subtitle-styles")}
+            tabIndex={0}
+          >
+            User Preferences
+          </li>
+        </ul>
+        <div className="tab-content">
+          {selectedTab === "your-account" && (
+            <div>
+              <label>Username</label>
+              <input
+                className="input"
+                type="text"
+                value={name}
+                placeholder={name}
+                readOnly
+                disabled
+              />
+              <label>New Password</label>
+              <input
+                className="input"
+                type="password"
+                onChange={(e) => setNewPassword(e.target.value)}
+                value={newPassword}
+                placeholder="New Password"
+              />
+              <label>Confirm Password</label>
+              <input
+                className="input"
+                type="password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                value={confirmPassword}
+                placeholder="Confirm Password"
+              />
+              <button onClick={onPressSave} className="saveButton">
+                SAVE CHANGES
+              </button>
+              <button onClick={logout} className="logoutButton">
+                LOGOUT
+              </button>
             </div>
+          )}
+          {selectedTab === "subtitle-styles" && (
+            <div>
+              {/* Sample Translation Text Section */}
+              <div
+                className="sample-translation"
+                style={{
+                  fontSize,
+                  color: fontColor,
+                  backgroundColor: fontBackgroundColor,
+                }}
+              >
+                <h3>Sample Translation Text</h3>
+              </div>
 
-            {/* Font Size Selector */}
-            <label className="tooltip">
-              Font Size
-              <img
-                src="question_mark_tooltip.png"
-                className="info-icon tooltip-icon"
+              {/* Font Size Selector */}
+              <label className="tooltip">
+                Font Size
+                <img
+                  src="question_mark_tooltip.png"
+                  className="info-icon tooltip-icon"
+                />
+                <span className="tooltip-text">
+                  This will adjust the translation text font size on the
+                  Translation Page.
+                </span>
+              </label>
+              <select
+                className="input"
+                value={fontSize}
+                onChange={(e) => setFontSize(e.target.value)}
+              >
+                <option value="12px">12px</option>
+                <option value="18px">18px</option>
+                <option value="24px">24px</option>
+                <option value="30px">30px</option>
+                <option value="36px">36px</option>
+                <option value="48px">48px</option>
+              </select>
+
+              {/* Font Color Selector */}
+              <label className="tooltip">
+                Translation Font Color
+                <img
+                  src="question_mark_tooltip.png"
+                  className="info-icon tooltip-icon"
+                />
+                <span className="tooltip-text">
+                  This will adjust the translation text color on the Translation
+                  Page.
+                </span>
+              </label>
+              <input
+                className="input"
+                type="color" // Use type="color" for color picker
+                value={fontColor}
+                onChange={(e) => setFontColor(e.target.value)}
               />
-              <span className="tooltip-text">
-                This will adjust the translation text font size on the
-                Translation Page.
-              </span>
-            </label>
-            <select
-              className="input"
-              value={fontSize}
-              onChange={(e) => setFontSize(e.target.value)}
-            >
-              <option value="12px">12px</option>
-              <option value="18px">18px</option>
-              <option value="24px">24px</option>
-              <option value="30px">30px</option>
-              <option value="36px">36px</option>
-              <option value="48px">48px</option>
-            </select>
-            
-            {/* Font Color Selector */}
-            <label className="tooltip">
-              Translation Font Color
-              <img
-                src="question_mark_tooltip.png"
-                className="info-icon tooltip-icon"
+
+              {/* Font Background Color Selector */}
+              <label className="tooltip">
+                Translation Font Background Color
+                <img
+                  src="question_mark_tooltip.png"
+                  className="info-icon tooltip-icon"
+                />
+                <span className="tooltip-text">
+                  This will adjust the translation text background color on the
+                  Translation Page.
+                </span>
+              </label>
+              <input
+                className="input"
+                type="color" // Use type="color" for color picker
+                value={fontBackgroundColor}
+                onChange={(e) => setFontBackgroundColor(e.target.value)}
               />
-              <span className="tooltip-text">
-                This will adjust the translation text color on the Translation
-                Page.
-              </span>
-            </label>
-            <input
-              className="input"
-              type="color" // Use type="color" for color picker
-              value={fontColor}
-              onChange={(e) => setFontColor(e.target.value)}
-            />
-            
-            {/* Font Background Color Selector */}
-            <label className="tooltip">
-              Translation Font Background Color
-              <img
-                src="question_mark_tooltip.png"
-                className="info-icon tooltip-icon"
-              />
-              <span className="tooltip-text">
-                This will adjust the translation text background color on the
-                Translation Page.
-              </span>
-            </label>
-            <input
-              className="input"
-              type="color" // Use type="color" for color picker
-              value={fontBackgroundColor}
-              onChange={(e) => setFontBackgroundColor(e.target.value)}
-            />
-            <button onClick={onPressSave2} className="saveButton">
-              SAVE CHANGES
-            </button>
-            <button onClick={logout} className="logoutButton">
-              LOGOUT
-            </button>
-          </div>
-        )}
+              <button onClick={onPressSave2} className="saveButton">
+                SAVE CHANGES
+              </button>
+              <button onClick={logout} className="logoutButton">
+                LOGOUT
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
     </>
   );
 };
