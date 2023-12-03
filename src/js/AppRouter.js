@@ -69,7 +69,7 @@ const AppRouter = () => {
             )}
             {isLoggedIn && (
               <div onClick={logout} className="flex space-x-4">
-                Sign Out
+                <Link to="/login">Sign Out</Link>
               </div>
             )}
           </header>
