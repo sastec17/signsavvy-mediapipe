@@ -8,6 +8,7 @@ import SignOfTheDay from "./signOfTheDay";
 import Error from "./error";
 import App from "./App";
 import { StylingProvider } from "./StylingContext";
+import Cookies from "js-cookie";
 
 const AppRouter = () => {
   // Retrieve the login status from localStorage on component mount
@@ -23,7 +24,7 @@ const AppRouter = () => {
   };
   function logout() {
     setIsLoggedIn(false); // Update login status
-    navigate("/createaccount");
+    //navigate("/login");
     Cookies.remove("login", { path: "" });
   }
 
