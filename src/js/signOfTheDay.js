@@ -4,8 +4,6 @@ import Cookies from "js-cookie";
 
 
 function SignOfTheDay() {
-  const [signName, setSignName] = useState("");
-  const [isPlaying, setIsPlaying] = useState(false);
   const [temp, setTemp] = useState("");
   const filesContext = require.context('/public/signOfTheDay', false, /\.(|mov|mp4)$/);
   const fileNames = filesContext.keys().map(key => key.split('/').pop());
@@ -17,19 +15,7 @@ function SignOfTheDay() {
   // The video source should point to the local video file
   const videoSrc = `/signOfTheDay/` + fileNames[video_to_load];
   const sign_name = fileNames[video_to_load].slice(0, -4)
-  const togglePlay = () => {
-    const videoElement = document.getElementById("signVideo");
 
-    if (videoElement) {
-      if (isPlaying) {
-        videoElement.pause();
-      } else {
-        videoElement.play();
-      }
-
-      setIsPlaying(!isPlaying);
-    }
-  };
   useEffect(() => {
     if (Cookies.get("login")) {
       const storedData = Cookies.get("login");

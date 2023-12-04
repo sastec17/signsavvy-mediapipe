@@ -14,13 +14,13 @@ const CreateAccount = (props) => {
   const navigate = useNavigate();
 
   const onButtonClick = () => {
-    if (username == "") {
+    if (username === "") {
       alert("Enter a username");
-    } else if (password == "") {
+    } else if (password === "") {
       alert("Enter a password");
-    } else if (FirstName == "") {
+    } else if (FirstName === "") {
       alert("Enter your first name");
-    } else if (LastName == "") {
+    } else if (LastName === "") {
       alert("Enter your last name");
     } else {
       try {

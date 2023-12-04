@@ -7,8 +7,8 @@ const ToggleSwitch = ({ label, checked, setChecked }) => {
     };
 
     return (
-        <div>
-            {label}{" "}
+        <div className="flex justify-center m-2">
+            <p className="m-1">{label}{" "}</p>
             <ReactSwitch
                 checked={checked}
                 onChange={handleChange}
