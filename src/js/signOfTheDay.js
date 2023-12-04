@@ -11,7 +11,7 @@ function SignOfTheDay() {
   const date = new Date()
   const current_day = date.getDay()
 
-  const video_to_load = current_day + 3 % fileNames.length
+  const video_to_load = current_day % fileNames.length
   // The video source should point to the local video file
   const videoSrc = `/signOfTheDay/` + fileNames[video_to_load];
   const sign_name = fileNames[video_to_load].slice(0, -4)
