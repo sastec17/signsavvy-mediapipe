@@ -125,6 +125,7 @@ function App() {
         alert("Please wait for gestureRecognizer to load");
         return;
       }
+      usedBefore = true;
       if (webcamRunning === true) {
         webcamRunning = false;
         handleWebCamChange();
@@ -285,13 +286,18 @@ function App() {
                 onClick={enableCam}
                 className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full m-1"
               >
-                <span>
-                  {!camRunningRef.current ? (
-                    <>Enable Camera</>
-                  ) : (
+              <span>
+                {usedBefore ? (
+                  camRunningRef.current ? (
                     <>Disable Predictions</>
-                  )}
-                </span>
+                  ) : (
+                    <>Enable Predictions</>
+                  )
+                ) : (
+                  <>Enable Camera</>
+                )}
+              </span>
+
               </button>
             </div>
             <div style={{ position: "relative" }}>
