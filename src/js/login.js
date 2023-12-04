@@ -7,13 +7,13 @@ const Login = (props) => {
   const { updateLoginStatus } = props; // Destructuring the function from props
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [usernameError, setUsernameError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const usernameError = useState("");
+  const passwordError = useState("");
 
   const navigate = useNavigate();
 
   const onButtonClick = () => {
-    if (username == "") {
+    if (username === "") {
       alert("Enter a username");
     } else if (password === "") {
       alert("Enter a password");

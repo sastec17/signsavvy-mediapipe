@@ -17,7 +17,6 @@
 import "../App.css";
 import "./AppRouter";
 import React, { useEffect, useRef, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { useSpeechSynthesis } from "react-speech-kit";
 import {
   GestureRecognizer,
@@ -38,7 +37,6 @@ const demosSection = document.getElementById("demos");
 const videoHeight = "360px";
 const videoWidth = "480px";
 var val = "";
-let speech_bool = false;
 
 // TODO - Replace modelAssetPath with local path to pre-trained set - Do we need to include additional data to this?
 const createGestureRecognizer = async () => {
@@ -72,7 +70,7 @@ function App() {
   const camRunningRef = useRef(camRunning); // Create a ref to keep track of camRunning
 
   const { speak } = useSpeechSynthesis();
-
+  
   // variables for user preferences to alter translation text
   const {
     fontSize,
@@ -105,14 +103,12 @@ function App() {
     backgroundColor: fontBackgroundColor || "white", // Use a default value if fontBackgroundColor is not set
   };
 
-  // TODO: Make this functional with useState() - lagged for some
   useEffect(() => {
     if (usedBefore) {
       enableCam();
     }
     return () => {
-      console.log("here");
-      if (webcamRunning == true) {
+      if (webcamRunning === true) {
         webcamRunning = false;
         usedBefore = true;
       }
@@ -141,7 +137,6 @@ function App() {
       const constraints = {
         video: true,
       };
-      console.log("here2");
 
       navigator.mediaDevices
         .enumerateDevices()
@@ -172,7 +167,6 @@ function App() {
       console.warn("getUserMedia() is not supported by your browser");
     }
   }
-  console.log("Render - shouldSpeech:", shouldSpeech);
 
   let lastVideoTime = -1;
   let results = undefined;
@@ -208,12 +202,12 @@ function App() {
           GestureRecognizer.HAND_CONNECTIONS,
           {
             color: "#FFFFFF",
-            lineWidth: 3,
+            lineWidth: 1,
           }
         );
         drawingUtils.drawLandmarks(landmarks, {
-          color: "0000FF",
-          lineWidth: 2,
+          color: "#2196F9",
+          lineWidth: 0.25,
         });
       }
     }
@@ -227,7 +221,7 @@ function App() {
       categoryName = results.gestures[0][0].categoryName;
       categoryScore = parseFloat(results.gestures[0][0].score * 100).toFixed(2);
       let handedness = results.handednesses[0][0].displayName;
-      if (handedness == "Right") {
+      if (handedness === "Right") {
         handedness = "Left";
       } else {
         handedness = "Right";
@@ -236,10 +230,9 @@ function App() {
     } else {
       gestureOutput.style.display = "none";
     }
-    console.log("shouldSpeechRef", shouldSpeechRef.current);
     if (
       val !== categoryName &&
-      shouldSpeechRef.current == true &&
+      shouldSpeechRef.current === true &&
       categoryScore > 85
     ) {
       speak({ text: categoryName });
@@ -274,7 +267,7 @@ function App() {
           </h1>
         </div>
       </header>
-      <div className="text-center flex flex-col justify-center">
+      <div className="text-center flex flex-col justify-center m-1">
         <p>Enable WebCam and begin signing</p>
 
         <ToggleSwitch
@@ -290,7 +283,7 @@ function App() {
               <button
                 id="webCamButton"
                 onClick={enableCam}
-                className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full"
+                className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full m-1"
               >
                 <span>
                   {!camRunningRef.current ? (

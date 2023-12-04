@@ -22,7 +22,7 @@ const Settings = ({ updateLoginStatus }) => {
 
   useEffect(() => {
     retrieveData();
-  }, []);
+  }, );
 
   const retrieveData = async () => {
     try {
@@ -168,6 +168,7 @@ const Settings = ({ updateLoginStatus }) => {
                 <img
                   src="question_mark_tooltip.png"
                   className="info-icon tooltip-icon"
+                  alt="Tool tip icon"
                 />
                 <span className="tooltip-text">
                   This will adjust the translation text font size on the
@@ -193,6 +194,7 @@ const Settings = ({ updateLoginStatus }) => {
                 <img
                   src="question_mark_tooltip.png"
                   className="info-icon tooltip-icon"
+                  alt="Tool tip icon"
                 />
                 <span className="tooltip-text">
                   This will adjust the translation text color on the Translation
@@ -212,6 +214,7 @@ const Settings = ({ updateLoginStatus }) => {
                 <img
                   src="question_mark_tooltip.png"
                   className="info-icon tooltip-icon"
+                  alt="Tool tip icon"
                 />
                 <span className="tooltip-text">
                   This will adjust the translation text background color on the
