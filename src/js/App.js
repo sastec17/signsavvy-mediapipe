@@ -28,6 +28,7 @@ import RecordScreen from "../components/ScreenRecord";
 import ToggleSwitch from "../components/ToggleSwitch";
 //import StylingContext, { StylingProvider } from './StylingContext';
 import { useStyling } from "./StylingContext";
+import Cookies from "js-cookie";
 
 let gestureRecognizer = GestureRecognizer;
 let webcamRunning = false;
@@ -73,7 +74,33 @@ function App() {
   const { speak } = useSpeechSynthesis();
 
   // variables for user preferences to alter translation text
-  const { fontSize, fontColor, fontBackgroundColor } = useStyling();
+  const {
+    fontSize,
+    setFontSize,
+    fontColor,
+    setFontColor,
+    fontBackgroundColor,
+    setFontBackgroundColor,
+  } = useStyling();
+  useEffect(() => {
+    retrieveData();
+  }, []);
+
+  const retrieveData = async () => {
+    try {
+      const value = Cookies.get("login");
+      setName(value);
+      setUsername(value);
+      const storedData = Cookies.get("login");
+      const storedData2 = Cookies.get(storedData);
+      const json = JSON.parse(storedData2);
+      setFontSize(json.fontsize);
+      setFontColor(json.fontcolor);
+      setFontBackgroundColor(json.backgroundColor);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const translationTextStyle = {
     fontSize: fontSize || "24px", // Use a default value if fontSize is not set
     color: fontColor || "black", // Use a default value if fontColor is not set
