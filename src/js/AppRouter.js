@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./styles.css";
-import Settings from "./settings";
-import Login from "./login";
-import CreateAccount from "./createaccount";
-import SignOfTheDay from "./signOfTheDay";
-import Error from "./error";
-import App from "./App";
-import { StylingProvider } from "./StylingContext";
+import Settings from "./settings.js";
+import Login from "./login.js";
+import CreateAccount from "./createaccount.js";
+import SignOfTheDay from "./signOfTheDay.js";
+import Error from "./error.js";
+import App from "./App.js";
+import { StylingProvider } from "./StylingContext.js";
 import Cookies from "js-cookie";
 
 const AppRouter = () => {

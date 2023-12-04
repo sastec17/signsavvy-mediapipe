@@ -11,7 +11,7 @@ function SignOfTheDay() {
   const date = new Date()
   const current_day = date.getDay()
 
-  const video_to_load = current_day % fileNames.length
+  const video_to_load = current_day + 3 % fileNames.length
   // The video source should point to the local video file
   const videoSrc = `/signOfTheDay/` + fileNames[video_to_load];
   const sign_name = fileNames[video_to_load].slice(0, -4)
@@ -35,8 +35,8 @@ function SignOfTheDay() {
       <div>Welcome {temp}!</div>
       <p style={{ fontSize: "24px", margin: "0" }}>{sign_name}</p>
       <div className="video-container">
-        <video id="signVideo" controls style={{ transform: "scaleX(1)" }}>
-          <source src={videoSrc} type="video/mp4" />
+        <video id="signVideo" controls muted style={{ transform: "scaleX(1)" }}>
+        <source src={filesContext(`./${fileNames[video_to_load]}`)} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>

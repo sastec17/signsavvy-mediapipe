@@ -1,10 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import reportWebVitals from "./reportWebVitals";
+import reportWebVitals from "./reportWebVitals.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
-import AppRouter from "./js/AppRouter";
-import Card from './js/landing'
+import AppRouter from "./js/AppRouter.js";
 
 ReactDOM.render(
   <React.StrictMode>

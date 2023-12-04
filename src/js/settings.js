@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles.css";
 import Cookies from "js-cookie";
-import { useStyling } from "./StylingContext";
+import { useStyling } from "./StylingContext.js";
 
 const Settings = ({ updateLoginStatus }) => {
   const [username, setUsername] = useState("");

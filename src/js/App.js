@@ -15,7 +15,7 @@
 // Code reformatted by EECS 495 SignSavvy team. Based on Mediapipe's code
 
 import "../App.css";
-import "./AppRouter";
+import "./AppRouter.js";
 import React, { useEffect, useRef, useState } from "react";
 import { useSpeechSynthesis } from "react-speech-kit";
 import {
@@ -23,10 +23,10 @@ import {
   FilesetResolver,
   DrawingUtils,
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
-import RecordScreen from "../components/ScreenRecord";
-import ToggleSwitch from "../components/ToggleSwitch";
+import RecordScreen from "../components/ScreenRecord.js";
+import ToggleSwitch from "../components/ToggleSwitch.js";
 //import StylingContext, { StylingProvider } from './StylingContext';
-import { useStyling } from "./StylingContext";
+import { useStyling } from "./StylingContext.js";
 import Cookies from "js-cookie";
 
 let gestureRecognizer = GestureRecognizer;
