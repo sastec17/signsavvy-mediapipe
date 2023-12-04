@@ -89,8 +89,6 @@ function App() {
   const retrieveData = async () => {
     try {
       const value = Cookies.get("login");
-      setName(value);
-      setUsername(value);
       const storedData = Cookies.get("login");
       const storedData2 = Cookies.get(storedData);
       const json = JSON.parse(storedData2);
