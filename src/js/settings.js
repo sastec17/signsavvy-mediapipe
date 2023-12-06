@@ -22,7 +22,7 @@ const Settings = ({ updateLoginStatus }) => {
 
   useEffect(() => {
     retrieveData();
-  }, );
+  }, []);
 
   const retrieveData = async () => {
     try {
