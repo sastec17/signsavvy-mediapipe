@@ -221,3 +221,36 @@ nav a:hover {
   margin-bottom: 20px; /* Adjust as needed */
   
 }
+
+/* Color picker styling */
+.color-picker-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.color-picker-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.color-picker {
+  margin-right: 10px;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  width: 50px; /* Adjust the width as needed */
+  height: 50px; /* Adjust the height as needed */
+}
+
+.color-picker-button {
+  cursor: pointer;
+  padding: 8px 30px;
+  background-color: #FFFFFF; /* Adjust the color as needed */
+  color: #000000;
+  padding: 10px;
+  border: 1px solid #797979;
+  border-radius: 5px;
+  margin: 12px 0;
+}
+
